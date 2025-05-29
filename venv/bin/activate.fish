@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/penascalf5/Documentos/Aleeza-proyecto-personal-2025-backup/venv
+set -gx VIRTUAL_ENV /home/penascalf5/Documentos/Aleeza-proyecto-personal-2025/Aleeza-proyecto-personal-2025/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH

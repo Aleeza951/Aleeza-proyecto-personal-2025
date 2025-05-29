@@ -19,6 +19,13 @@
   font-family: var(--font-family);
 }
 
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 16px;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+}
 
 /* Header styles */
 header {

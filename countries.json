@@ -1,0 +1,371 @@
+{
+    "USA": {
+      "history": "Founded in 1776, the USA is a leading country in the Americas.",
+      "famous_landmarks": ["Statue of Liberty", "Grand Canyon", "White House"],
+      "famous_personalities": ["Abraham Lincoln", "Oprah Winfrey"]
+    },
+    "France": {
+      "history": "Known for its rich cultural history, revolution, and cuisine.",
+      "famous_landmarks": ["Eiffel Tower", "Louvre Museum"],
+      "famous_personalities": ["Napoleon Bonaparte", "Marie Curie"]
+    },
+    "Japan": {
+      "history": "Japan is known for its technological advancements and rich culture.",
+      "famous_landmarks": ["Mount Fuji", "Kyoto Temples", "Tokyo Tower"],
+      "famous_personalities": ["Emperor Akihito", "Hayao Miyazaki", "Yoko Ono"]
+    },
+      "Germany": {
+        "history": "Germany, once divided, is now a leading power in Europe, known for its strong economy and rich cultural heritage.",
+        "famous_landmarks": ["Brandenburg Gate", "Neuschwanstein Castle", "Cologne Cathedral"],
+        "famous_personalities": ["Albert Einstein", "Ludwig van Beethoven", "Angela Merkel"]
+      },
+      "Italy": {
+        "history": "Italy is renowned for its ancient civilization, art, architecture, and its significant role in world history.",
+        "famous_landmarks": ["Colosseum", "Leaning Tower of Pisa", "Vatican City"],
+        "famous_personalities": ["Leonardo da Vinci", "Giuseppe Verdi", "Sophia Loren"]
+      },
+      "India": {
+        "history": "India, one of the oldest civilizations, is known for its rich culture, history, and diverse traditions.",
+        "famous_landmarks": ["Taj Mahal", "Qutub Minar", "Gateway of India"],
+        "famous_personalities": ["Mahatma Gandhi", "Sachin Tendulkar", "Indira Gandhi"]
+      },
+      "China": {
+        "history": "China, one of the world's oldest and most influential civilizations, has a history spanning thousands of years.",
+        "famous_landmarks": ["Great Wall of China", "Forbidden City", "Terracotta Army"],
+        "famous_personalities": ["Confucius", "Mao Zedong", "Jack Ma"]
+      },
+      "Brazil": {
+        "history": "Brazil, known for its vast rainforests and vibrant culture, is the largest country in South America.",
+        "famous_landmarks": ["Christ the Redeemer", "Amazon Rainforest", "Iguazu Falls"],
+        "famous_personalities": ["Pelé", "Carmen Miranda", "Oscar Niemeyer"]
+      },
+        "Canada": {
+          "history": "Canada, a country known for its vast natural landscapes and multiculturalism, gained independence from the UK in 1867.",
+          "famous_landmarks": ["CN Tower", "Niagara Falls", "Banff National Park"],
+          "famous_personalities": ["Justin Trudeau", "Celine Dion", "Wayne Gretzky"]
+        },
+        "Russia": {
+          "history": "Russia, the largest country in the world, has a rich history of monarchies, revolutions, and a strong influence on global politics.",
+          "famous_landmarks": ["Red Square", "Kremlin", "Lake Baikal"],
+          "famous_personalities": ["Peter the Great", "Catherine the Great", "Vladimir Putin"]
+        },
+        "Australia": {
+          "history": "Australia, once a British colony, is now a developed country known for its unique wildlife and stunning landscapes.",
+          "famous_landmarks": ["Sydney Opera House", "Great Barrier Reef", "Uluru"],
+          "famous_personalities": ["Steve Irwin", "Nicole Kidman", "Hugh Jackman"]
+        },
+        "Mexico": {
+          "history": "Mexico, with a rich indigenous history and colonial past, is known for its vibrant culture, cuisine, and historical landmarks.",
+          "famous_landmarks": ["Chichen Itza", "Teotihuacan", "Cenotes"],
+          "famous_personalities": ["Frida Kahlo", "Diego Rivera", "Carlos Slim"]
+        },
+        "South Africa": {
+          "history": "South Africa, known for its diverse cultures and rich history, transitioned from apartheid to democracy in 1994.",
+          "famous_landmarks": ["Table Mountain", "Robben Island", "Kruger National Park"],
+          "famous_personalities": ["Nelson Mandela", "Desmond Tutu", "Charlize Theron"]
+        },
+        "Spain": {
+          "history": "Spain, with its rich cultural heritage, was a global empire in the 16th and 17th centuries, influencing much of the world.",
+          "famous_landmarks": ["La Sagrada Familia", "Alhambra", "Park Güell"],
+          "famous_personalities": ["Pablo Picasso", "Antonio Gaudí", "Penélope Cruz"]
+        },
+          "United Kingdom": {
+            "history": "The UK, once the center of a global empire, is known for its influence in politics, culture, and the industrial revolution.",
+            "famous_landmarks": ["Big Ben", "Stonehenge", "Buckingham Palace"],
+            "famous_personalities": ["Winston Churchill", "The Beatles", "Queen Elizabeth II"]
+          },
+          "Argentina": {
+            "history": "Argentina, known for its rich culture and history, has a tradition of political turmoil and economic changes.",
+            "famous_landmarks": ["Iguazu Falls", "Perito Moreno Glacier", "Buenos Aires Obelisk"],
+            "famous_personalities": ["Lionel Messi", "Eva Perón", "Jorge Luis Borges"]
+          },
+          "South Korea": {
+            "history": "South Korea is a leading country in technology and culture, especially known for its rise in global pop culture with K-pop.",
+            "famous_landmarks": ["Gyeongbokgung Palace", "Seoul Tower", "Jeju Island"],
+            "famous_personalities": ["Kim Jong-un", "BTS", "Park Geun-hye"]
+          },
+          "Greece": {
+            "history": "Greece is considered the cradle of Western civilization, known for its ancient history and contributions to philosophy, democracy, and the arts.",
+            "famous_landmarks": ["Acropolis", "Parthenon", "Santorini"],
+            "famous_personalities": ["Alexander the Great", "Socrates", "Aristotle"]
+          },
+          "Turkey": {
+            "history": "Turkey, once the heart of the Ottoman Empire, is known for its rich cultural and historical significance.",
+            "famous_landmarks": ["Hagia Sophia", "Blue Mosque", "Cappadocia"],
+            "famous_personalities": ["Mustafa Kemal Atatürk", "Orhan Pamuk", "Tarkan"]
+          },
+          "Egypt": {
+            "history": "Egypt, with its ancient civilization, is known for its contributions to science, mathematics, and architecture.",
+            "famous_landmarks": ["Pyramids of Giza", "Sphinx", "Karnak Temple"],
+            "famous_personalities": ["Tutankhamun", "Cleopatra", "Naguib Mahfouz"]
+          },
+          "Thailand": {
+            "history": "Thailand, known for its tropical beaches and rich culture, has remained independent throughout its history.",
+            "famous_landmarks": ["Grand Palace", "Wat Arun", "Phi Phi Islands"],
+            "famous_personalities": ["King Bhumibol Adulyadej", "Yaya Urassaya", "Somchai Prasert"]
+          },
+              "New Zealand": {
+              "history": "New Zealand, known for its indigenous Maori culture and stunning landscapes, was one of the last places to be settled by humans.",
+              "famous_landmarks": ["Milford Sound", "Sky Tower", "Rotorua"],
+              "famous_personalities": ["Sir Edmund Hillary", "Benedict Cumberbatch", "Jacinda Ardern"]
+            },
+            "Chile": {
+              "history": "Chile, a long, narrow country along the Pacific coast, is known for its diverse geography and significant cultural heritage.",
+              "famous_landmarks": ["Easter Island", "Atacama Desert", "Torres del Paine National Park"],
+              "famous_personalities": ["Pablo Neruda", "Isabel Allende", "Augusto Pinochet"]
+            },
+            "Nigeria": {
+              "history": "Nigeria, the most populous country in Africa, has a rich history marked by diverse cultures, kingdoms, and a colonial past.",
+              "famous_landmarks": ["Zuma Rock", "Olumo Rock", "Erin Ijesha Waterfall"],
+              "famous_personalities": ["Chinua Achebe", "Wole Soyinka", "Ngozi Okonjo-Iweala"]
+            },
+            "Singapore": {
+              "history": "Singapore, a global financial hub, was once a British colony before becoming an independent republic in 1965.",
+              "famous_landmarks": ["Marina Bay Sands", "Gardens by the Bay", "Sentosa Island"],
+              "famous_personalities": ["Lee Kuan Yew", "Jack Neo", "Michelle Yeoh"]
+            },
+            "Portugal": {
+              "history": "Portugal, a maritime nation, was one of the first European countries to explore and establish colonies around the world.",
+              "famous_landmarks": ["Belem Tower", "Jerónimos Monastery", "Douro Valley"],
+              "famous_personalities": ["Cristiano Ronaldo", "Amália Rodrigues", "Fernando Pessoa"]
+            },
+            "Sweden": {
+              "history": "Sweden, known for its high quality of life, neutrality, and progressive policies, has a strong history in innovation and design.",
+              "famous_landmarks": ["Vasa Museum", "ABBA Museum", "Stockholm Archipelago"],
+              "famous_personalities": ["Alfred Nobel", "Greta Garbo", "Avicii"]
+            },
+              "Vietnam": {
+                "history": "Vietnam, a country in Southeast Asia, has a rich history of struggle and resilience, especially in the Vietnam War.",
+                "famous_landmarks": ["Ha Long Bay", "Cu Chi Tunnels", "Temple of Literature"],
+                "famous_personalities": ["Ho Chi Minh", "Ngo Bao Chau", "Tran Anh Hung"]
+              },
+              "Indonesia": {
+                "history": "Indonesia, an archipelago in Southeast Asia, is known for its diverse cultures, languages, and the historical influence of colonialism.",
+                "famous_landmarks": ["Bali", "Borobudur Temple", "Komodo Island"],
+                "famous_personalities": ["Sukarno", "Anggun", "Raisa Andriana"]
+              },
+              "Peru": {
+                "history": "Peru, known for its ancient Inca civilization, has a rich cultural heritage and is home to many archaeological wonders.",
+                "famous_landmarks": ["Machu Picchu", "Nazca Lines", "Lake Titicaca"],
+                "famous_personalities": ["Mario Vargas Llosa", "César Vallejo", "Gastón Acurio"]
+              },
+              "Saudi Arabia": {
+                "history": "Saudi Arabia, home to Islam's two holiest cities, Mecca and Medina, is a key country in the Middle East with a rich cultural and religious history.",
+                "famous_landmarks": ["Kaaba", "Al-Masjid al-Haram", "Diriyah"],
+                "famous_personalities": ["King Salman", "Osama bin Laden", "Abdulaziz Al Saud"]
+              },
+              "Finland": {
+                "history": "Finland, known for its unique culture and education system, was once part of Sweden before gaining independence in 1917.",
+                "famous_landmarks": ["Helsinki Cathedral", "Lake Saimaa", "Santa Claus Village"],
+                "famous_personalities": ["Sauli Niinistö", "Linus Torvalds", "Kimi Räikkönen"]
+              },
+              "Switzerland": {
+                "history": "Switzerland, famous for its neutrality and strong economy, has a long history of being a haven for banking and finance.",
+                "famous_landmarks": ["Matterhorn", "Lake Geneva", "Château de Chillon"],
+                "famous_personalities": ["Albert Einstein", "Jean-Jacques Rousseau", "Roger Federer"]
+              },
+              "Poland": {
+                "history": "Poland, with a history of partitions and independence struggles, is known for its rich cultural and artistic heritage.",
+                "famous_landmarks": ["Wawel Castle", "Auschwitz Memorial", "Białowieża Forest"],
+                "famous_personalities": ["Marie Curie", "Frédéric Chopin", "Andrzej Wajda"]
+              },
+              "Netherlands": {
+                "history": "The Netherlands, known for its maritime history and influence in trade and global politics, is famous for its liberal policies and high standard of living.",
+                "famous_landmarks": ["Anne Frank House", "Keukenhof Gardens", "Rijksmuseum"],
+                "famous_personalities": ["Vincent van Gogh", "Anne Frank", "Rutger Hauer"]
+              },
+              "Pakistan": {
+                "history": "Pakistan, founded in 1947, has a rich history of cultural diversity, political struggles, and significant contributions to science and technology.",
+                "famous_landmarks": ["Badshahi Mosque", "Lahore Fort", "Karimabad"],
+                "famous_personalities": ["Abdul Sattar Edhi", "Imran Khan", "Malala Yousafzai"]
+              },             
+      
+    "title": {
+      "text": {
+        "headline": "Línea de Tiempo Histórica Global"
+      }
+    },
+    "events": [
+      {
+        "start_date": {
+          "year": "1776"
+        },
+        "text": {
+          "headline": "Independencia de EE. UU.",
+          "text": "Estados Unidos declara su independencia de Gran Bretaña."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1789"
+        },
+        "text": {
+          "headline": "Revolución Francesa",
+          "text": "El pueblo francés se levanta contra la monarquía."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1815"
+        },
+        "text": {
+          "headline": "Batalla de Waterloo",
+          "text": "Napoleón Bonaparte es derrotado en la batalla de Waterloo, marcando el fin de las Guerras Napoleónicas."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1914"
+        },
+        "text": {
+          "headline": "Inicio de la Primera Guerra Mundial",
+          "text": "El asesinato del archiduque Francisco Fernando desencadena la Primera Guerra Mundial."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1917"
+        },
+        "text": {
+          "headline": "Revolución Rusa",
+          "text": "La Revolución Rusa derroca al imperio zarista y establece el régimen comunista."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1945"
+        },
+        "text": {
+          "headline": "Fin de la Segunda Guerra Mundial",
+          "text": "El final de la Segunda Guerra Mundial se marca con la rendición de Alemania y Japón."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1969"
+        },
+        "text": {
+          "headline": "Llegada del Hombre a la Luna",
+          "text": "Neil Armstrong se convierte en el primer ser humano en pisar la Luna durante la misión Apolo 11."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1989"
+        },
+        "text": {
+          "headline": "Caída del Muro de Berlín",
+          "text": "El Muro de Berlín cae, simbolizando el fin de la Guerra Fría y la reunificación de Alemania."
+        }
+      },
+      {
+        "start_date": {
+          "year": "2001"
+        },
+        "text": {
+          "headline": "Atentados del 11 de septiembre",
+          "text": "Una serie de atentados terroristas coordinados destruyen las Torres Gemelas en Nueva York y afectan al Pentágono."
+        }
+      },
+      {
+        "start_date": {
+          "year": "2008"
+        },
+        "text": {
+          "headline": "Crisis financiera global",
+          "text": "La quiebra de Lehman Brothers desata una crisis financiera mundial."
+        }
+      },
+      {
+        "start_date": {
+          "year": "2011"
+        },
+        "text": {
+          "headline": "Primavera Árabe",
+          "text": "Una serie de protestas y revoluciones estallan en el mundo árabe, pidiendo democracia y derechos humanos."
+        }
+      },
+      {
+        "start_date": {
+          "year": "476"
+        },
+        "text": {
+          "headline": "Caída del Imperio Romano de Occidente",
+          "text": "El Imperio Romano de Occidente cae, marcando el fin de la antigüedad clásica."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1492"
+        },
+        "text": {
+          "headline": "Descubrimiento de América",
+          "text": "Cristóbal Colón llega al continente americano, iniciando la colonización europea en América."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1517"
+        },
+        "text": {
+          "headline": "Reforma Protestante",
+          "text": "Martín Lutero clava sus 95 tesis en la puerta de la iglesia de Wittenberg, iniciando la Reforma Protestante."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1770"
+        },
+        "text": {
+          "headline": "Revolución Industrial",
+          "text": "Comienza la Revolución Industrial en Gran Bretaña, transformando la producción y la sociedad."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1947"
+        },
+        "text": {
+          "headline": "Independencia de la India",
+          "text": "La India obtiene su independencia del Imperio Británico tras una larga lucha."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1963"
+        },
+        "text": {
+          "headline": "Discurso de Martin Luther King",
+          "text": "Martin Luther King pronuncia su famoso discurso 'I Have a Dream' durante la marcha por el trabajo y la libertad."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1980"
+        },
+        "text": {
+          "headline": "Guerra en Afganistán",
+          "text": "La Unión Soviética invade Afganistán, dando lugar a una guerra de diez años."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1991"
+        },
+        "text": {
+          "headline": "Disolución de la Unión Soviética",
+          "text": "La Unión Soviética se disuelve, marcando el fin de la Guerra Fría."
+        }
+      },
+      {
+        "start_date": {
+          "year": "1994"
+        },
+        "text": {
+          "headline": "Genocidio en Ruanda",
+          "text": "Un genocidio masivo ocurre en Ruanda, donde cientos de miles de tutsis y hutus moderados son asesinados."
+        }
+      }
+    ]
+  }
+  

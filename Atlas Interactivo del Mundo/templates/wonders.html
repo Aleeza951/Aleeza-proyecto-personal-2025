@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maravillas - Atlas Interactivo del Mundo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+  <style>
+    /* Light mode (default) */
+:root {
+  --primary-color: #004d99;
+  --secondary-color: #e3f2fd;
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --card-bg: white;
+  --footer-bg: #ddd;
+  --header-bg: var(--primary-color);
+  --header-text: white;
+}
+
+/* Dark mode */
+[data-theme="dark"] {
+  --primary-color: #82b1ff;
+  --secondary-color: #1e1e1e;
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --footer-bg: #2d2d2d;
+  --header-bg: #121212;
+  --header-text: #e0e0e0;
+}
+
+/* Apply variables to elements */
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
+/* Header styles */
+header {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+header h1 {
+  padding: 20px;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+header h1 i.fas.fa-globe-americas {
+  margin-right: 15px;
+  color: #f39c12;
+  font-size: 2.2rem;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+nav {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 15px 25px;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+nav ul li a i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+nav ul li a:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f39c12;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav ul li a:hover:before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+nav ul li a.active {
+  background-color: #3498db;
+  font-weight: 600;
+}
+
+nav ul li a.active:before {
+  transform: scaleX(1);
+}
+
+    .controls {
+      display: flex;
+      gap: 15px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    .controls input, .controls select {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      min-width: 200px;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    
+    .wonders-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .wonder-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .wonder-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    
+    .wonder-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .wonder-content {
+      padding: 20px;
+    }
+    
+    .wonder-card h3 {
+      margin: 0 0 10px 0;
+      color: var(--primary-color);
+    }
+    
+    .wonder-meta {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+    
+    .wonder-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--secondary-color);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.9em;
+    }
+    
+    .wonder-map {
+      height: 200px;
+      margin-top: 15px;
+      border-radius: 4px;
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .like-btn, .share-btn {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    
+    .like-btn {
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    
+    .like-btn.liked {
+      background-color: #ffebee;
+      color: #d32f2f;
+    }
+    
+    .share-btn {
+      background-color: var(--primary-color);
+      color: white;
+    }
+    
+    footer {
+      text-align: center;
+      padding: 25px 0;
+      background-color: #ddd;
+      margin-top: 50px;
+      font-size: 0.9em;
+    }
+    
+    @media (max-width: 768px) {
+      .wonders-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+    }
+    
+    /* Dark mode */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: #121212;
+        color: #e0e0e0;
+      }
+      
+      .wonder-card {
+        background: #1e1e1e;
+        color: #f0f0f0;
+      }
+      
+      .wonder-card h3 {
+        color: #82b1ff;
+      }
+      
+      footer {
+        background: #2d2d2d;
+        color: #aaa;
+      }
+    }
+    [data-theme="dark"] {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .wonder-card {
+  background: #1e1e1e;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .wonder-card h3 {
+  color: #82b1ff;
+}
+
+[data-theme="dark"] footer {
+  background: #2d2d2d;
+  color: #aaa;
+}
+/* Estilos generales para los modales */
+.modal {
+  display: none; /* Oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.3s;
+}
+:root {
+  --primary-color: #004d99;
+  --secondary-color: #e3f2fd;
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --card-bg: white;
+  --footer-bg: #ddd;
+  --header-bg: var(--primary-color);
+  --header-text: white;
+}
+
+[data-theme="dark"] {
+  --primary-color: #82b1ff;
+  --secondary-color: #1e1e1e;
+  --bg-color: #121212;
+  --text-color: #e0e0e0;
+  --card-bg: #1e1e1e;
+  --footer-bg: #2d2d2d;
+  --header-bg: #121212;
+  --header-text: #e0e0e0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 0 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--header-text);
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.auth-btn {
+  color: var(--header-text);
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: rgba(255,255,255,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.auth-btn:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+main {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.controls input, .controls select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-width: 200px;
+  background: var(--card-bg);
+  color: var(--text-color);
+}
+
+.wonders-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+.wonder-card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.wonder-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.wonder-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.wonder-content {
+  padding: 20px;
+}
+
+.wonder-card h3 {
+  margin: 0 0 10px 0;
+  color: var(--primary-color);
+}
+
+.wonder-meta {
+  display: flex;
+  gap: 15px;
+  margin: 10px 0;
+  flex-wrap: wrap;
+}
+
+.wonder-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--secondary-color);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.9em;
+}
+
+.wonder-map {
+  height: 200px;
+  margin-top: 15px;
+  border-radius: 4px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.like-btn, .share-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.like-btn {
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+.like-btn.liked {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.share-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 0;
+  background-color: var(--footer-bg);
+  margin-top: 50px;
+  font-size: 0.9em;
+}
+
+#theme-toggle {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .wonders-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  header {
+    padding: 15px;
+  }
+}
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  animation: slideDown 0.3s;
+}
+
+/* Botón de cerrar */
+.close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Títulos del modal */
+.modal-content h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 24px;
+}
+
+/* Formularios */
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Campos de entrada */
+.modal-content input {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.modal-content input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  outline: none;
+}
+
+/* Botones */
+.modal-content button {
+  background-color: #3498db;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-content button:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.modal-content button:active {
+  transform: translateY(0);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 20% auto;
+    width: 85%;
+    padding: 20px;
+  }
+}
+.close:hover {
+  color: var(--text-color);
+}
+
+#auth-buttons button, #logout-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#username-display {
+  font-weight: bold;
+  color: var(--header-text);
+  margin-right: 10px;
+}
+
+  </style>
+</head>
+<body>
+<header>
+  <h1><i class="fas fa-globe-americas"></i> Atlas Interactivo del Mundo</h1>
+  <nav>
+    <ul>
+      <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
+      <li><a href="{{ url_for('atlas') }}" class="active"><i class="fas fa-map-marked-alt"></i> Atlas</a></li>
+      <li><a href="{{ url_for('wonders') }}"><i class="fas fa-monument"></i> Maravillas</a></li>
+      <li><a href="{{ url_for('explorers') }}"><i class="fas fa-hiking"></i> Exploradores</a></li>
+      <li id="auth-buttons">
+        <button id="login-btn"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
+        <button id="signup-btn"><i class="fas fa-user-plus"></i> Registrarse</button>
+      </li>
+      <li id="user-menu" style="display:none;">
+        <span id="username-display"></span>
+        <button id="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Add these modal dialogs at the bottom of your body -->
+<div id="login-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Iniciar sesión</h2>
+    <form id="login-form">
+      <input type="email" id="login-email" placeholder="Correo electrónico" required>
+      <input type="password" id="login-password" placeholder="Contraseña" required>
+      <button type="submit">Iniciar sesión</button>
+    </form>
+  </div>
+</div>
+
+<div id="signup-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Registrarse</h2>
+    <form id="signup-form">
+      <input type="text" id="signup-name" placeholder="Nombre completo" required>
+      <input type="email" id="signup-email" placeholder="Correo electrónico" required>
+      <input type="password" id="signup-password" placeholder="Contraseña" required>
+      <button type="submit">Registrarse</button>
+    </form>
+  </div>
+</div>
+
+  <main>
+    <h2>Maravillas del Mundo</h2>
+    
+    <div class="controls">
+      <input type="text" id="search" placeholder="Buscar maravillas..." aria-label="Buscar maravillas">
+      <select id="country-filter" aria-label="Filtrar por país">
+        <option value="all">Todos los países</option>
+      </select>
+      <select id="sort-by" aria-label="Ordenar por">
+        <option value="name-asc">Nombre (A-Z)</option>
+        <option value="name-desc">Nombre (Z-A)</option>
+        <option value="year-asc">Año (más antiguo)</option>
+        <option value="year-desc">Año (más reciente)</option>
+      </select>
+    </div>
+    
+    <div class="wonders-container" id="wonders-list"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2023 Atlas Interactivo del Mundo | <button id="theme-toggle">Cambiar tema</button></p>
+  </footer>
+
+  <!-- Leaflet JS for maps -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  
+  <script>
+    // Enhanced wonders data with coordinates and images
+     const wonders = [
+  {
+    id: 1,
+    name: "Gran Muralla China",
+    country: "China",
+    countryCode: "cn",
+    year: 700,
+    coordinates: [40.4319, 116.5704],
+    description: "Una gran muralla antigua construida para defensa que se extiende por más de 21,000 km. Es una de las obras de ingeniería más impresionantes de la historia.",
+    image: "https://images.unsplash.com/photo-1518258726560-ed5b57b241ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 2,
+    name: "Taj Mahal",
+    country: "India",
+    countryCode: "in",
+    year: 1648,
+    coordinates: [27.1751, 78.0421],
+    description: "Famoso mausoleo de mármol blanco construido por el emperador Shah Jahan en memoria de su esposa Mumtaz Mahal. Considerado una joya del arte musulmán en India.",
+    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 3,
+    name: "Machu Picchu",
+    country: "Perú",
+    countryCode: "pe",
+    year: 1450,
+    coordinates: [-13.1631, -72.5450],
+    description: "Ciudadela incaica del siglo XV ubicada en la cordillera oriental del sur de Perú. Es famosa por sus sofisticadas paredes de piedra seca que combinan enormes bloques sin usar mortero.",
+    image: "https://images.unsplash.com/photo-1526392060635-9d6019884377?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 4,
+    name: "Petra",
+    country: "Jordania",
+    countryCode: "jo",
+    year: -312,
+    coordinates: [30.3285, 35.4444],
+    description: "Ciudad histórica y arqueológica famosa por su arquitectura excavada en la roca y su sistema de conducción de agua. Fue la capital del reino nabateo.",
+    image: "https://images.unsplash.com/photo-1517101724602-c257fe568157?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 5,
+    name: "Coliseo",
+    country: "Italia",
+    countryCode: "it",
+    year: 80,
+    coordinates: [41.8902, 12.4924],
+    description: "Anfiteatro ovalado en el centro de Roma, el más grande jamás construido. Podía albergar entre 50,000 y 80,000 espectadores para ver combates de gladiadores y espectáculos públicos.",
+    image: "https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },  // <-- This comma was missing
+  {
+    id: 6,
+    name: "Chichén Itzá",
+    country: "México",
+    countryCode: "mx",
+    year: 600,
+    coordinates: [20.6829, -88.5686],
+    description: "Importante ciudad maya del período clásico terminal. Su pirámide principal, El Castillo, es famosa por el descenso de la serpiente de luz durante los equinoccios.",
+    image: "https://images.unsplash.com/photo-1525873020571-08690094e301?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 7,
+    name: "Cristo Redentor",
+    country: "Brasil",
+    countryCode: "br",
+    year: 1931,
+    coordinates: [-22.9519, -43.2106],
+    description: "Estatua monumental de Jesús de Nazaret con los brazos abiertos, ubicada en la cima del cerro del Corcovado en Río de Janeiro. Mide 30 metros de altura.",
+    image: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 8,
+    name: "Pirámides de Giza",
+    country: "Egipto",
+    countryCode: "eg",
+    year: -2560,
+    coordinates: [29.9792, 31.1342],
+    description: "Complejo de pirámides funerarias construidas para los faraones Keops, Kefrén y Micerino. La Gran Pirámide de Keops es la única de las Siete Maravillas del Mundo Antiguo que aún perdura.",
+    image: "https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 9,
+    name: "Torre Eiffel",
+    country: "Francia",
+    countryCode: "fr",
+    year: 1889,
+    coordinates: [48.8584, 2.2945],
+    description: "Estructura de hierro pudelado diseñada por Gustave Eiffel para la Exposición Universal de 1889 en París. Con 300 metros de altura, fue el edificio más alto del mundo durante 41 años.",
+    image: "https://images.unsplash.com/photo-1431274172761-fca41d930114?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 10,
+    name: "Ópera de Sídney",
+    country: "Australia",
+    countryCode: "au",
+    year: 1973,
+    coordinates: [-33.8568, 151.2153],
+    description: "Edificio expresionista con una serie de grandes 'conchas' prefabricadas, que forman los techos de la estructura. Es uno de los centros de artes escénicas más famosos del mundo.",
+    image: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 11,
+    name: "Angkor Wat",
+    country: "Camboya",
+    countryCode: "kh",
+    year: 1150,
+    coordinates: [13.4125, 103.8660],
+    description: "El templo religioso más grande del mundo, construido originalmente como un templo hindú dedicado a Vishnú para el Imperio Jemer, transformándose gradualmente en un templo budista.",
+    image: "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 12,
+    name: "Estatua de la Libertad",
+    country: "Estados Unidos",
+    countryCode: "us",
+    year: 1886,
+    coordinates: [40.6892, -74.0445],
+    description: "Monumento icónico regalado por Francia a Estados Unidos. Representa a Libertas, la diosa romana de la libertad, que sostiene una antorcha y una tabula ansata con la fecha de la Declaración de Independencia de EE.UU.",
+    image: "https://images.unsplash.com/photo-1527525443983-6e60c75fff46?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+  id: 13,
+  name: "La Alhambra",
+  country: "España",
+  countryCode: "es",
+  year: 1333,
+  coordinates: [37.1761, -3.5881],
+  description: "Palacio y fortaleza andalusí situado en Granada, famoso por su arquitectura islámica y sus intrincados detalles artísticos.",
+  image: "https://images.unsplash.com/photo-1605342818594-355b0b9ceeff?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+},
+  {
+    id: 14,
+    name: "Stonehenge",
+    country: "Reino Unido",
+    countryCode: "gb",
+    year: -3000,
+    coordinates: [51.1789, -1.8262],
+    description: "Monumento megalítico tipo crómlech, compuesto por grandes bloques de piedra distribuidos en cuatro circunferencias concéntricas. Su propósito sigue siendo motivo de debate.",
+    image: "https://images.unsplash.com/photo-1500380804539-4e1e8c1e7118?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  },
+  {
+    id: 15,
+    name: "Torre de Pisa",
+    country: "Italia",
+    countryCode: "it",
+    year: 1372,
+    coordinates: [43.7230, 10.3966],
+    description: "Campanario de la catedral de Pisa, mundialmente conocido por su inclinación involuntaria. La torre comenzó a inclinarse durante su construcción debido a un suelo inestable.",
+    image: "https://images.unsplash.com/photo-1534482426-1877f9e82a59?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+  }
+];
+
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load wonders
+      renderWonders(wonders);
+      
+      // Set up country filter options
+      setupCountryFilter();
+      
+      // Set up event listeners
+      document.getElementById('search').addEventListener('input', filterWonders);
+      document.getElementById('country-filter').addEventListener('change', filterWonders);
+      document.getElementById('sort-by').addEventListener('change', sortWonders);
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+    });
+
+    // Render wonders to the page
+    function renderWonders(wondersToRender) {
+      const container = document.getElementById('wonders-list');
+      container.innerHTML = '';
+      
+      wondersToRender.forEach(wonder => {
+        const card = document.createElement('div');
+        card.className = 'wonder-card';
+        
+        // Check if this wonder is liked
+        const liked = localStorage.getItem(`wonder-${wonder.id}-liked`) === 'true';
+        const likes = localStorage.getItem(`wonder-${wonder.id}-likes`) || 0;
+        
+        card.innerHTML = `
+          <img src="${wonder.image}" alt="${wonder.name}" class="wonder-image">
+          <div class="wonder-content">
+            <h3>${wonder.name}</h3>
+            <div class="wonder-meta">
+              <span><i class="fas fa-landmark"></i> ${wonder.year || 'Desconocido'}</span>
+              <span><i class="fi fi-${wonder.countryCode}"></i> ${wonder.country}</span>
+            </div>
+            <p>${wonder.description}</p>
+            
+            <div id="map-${wonder.id}" class="wonder-map"></div>
+            
+            <div class="action-buttons">
+              <button class="like-btn ${liked ? 'liked' : ''}" data-id="${wonder.id}">
+                <i class="fas fa-heart"></i> <span class="likes">${likes}</span>
+              </button>
+              <button class="share-btn" data-name="${wonder.name}">
+                <i class="fas fa-share-alt"></i> Compartir
+              </button>
+            </div>
+          </div>
+        `;
+        
+        container.appendChild(card);
+        
+        // Initialize map for this wonder
+        initMap(wonder);
+      });
+      
+      // Add event listeners to buttons
+      document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', handleLike);
+      });
+      
+      document.querySelectorAll('.share-btn').forEach(btn => {
+        btn.addEventListener('click', handleShare);
+      });
+    }
+
+    // Initialize Leaflet map for a wonder
+    function initMap(wonder) {
+      const map = L.map(`map-${wonder.id}`).setView(wonder.coordinates, 10);
+      
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      L.marker(wonder.coordinates)
+        .addTo(map)
+        .bindPopup(`<b>${wonder.name}</b><br>${wonder.country}`)
+        .openPopup();
+    }
+
+    // Set up country filter dropdown
+    function setupCountryFilter() {
+      const filter = document.getElementById('country-filter');
+      
+      // Get unique countries
+      const countries = [...new Set(wonders.map(w => w.country))];
+      
+      // Add options
+      countries.sort().forEach(country => {
+        const option = document.createElement('option');
+        option.value = country;
+        option.textContent = country;
+        filter.appendChild(option);
+      });
+    }
+
+    // Filter wonders based on search and country
+    function filterWonders() {
+      const searchTerm = document.getElementById('search').value.toLowerCase();
+      const countryFilter = document.getElementById('country-filter').value;
+      
+      const filtered = wonders.filter(wonder => {
+        const matchesSearch = wonder.name.toLowerCase().includes(searchTerm) || 
+                             wonder.description.toLowerCase().includes(searchTerm);
+        const matchesCountry = countryFilter === 'all' || wonder.country === countryFilter;
+        
+        return matchesSearch && matchesCountry;
+      });
+      
+      renderWonders(filtered);
+    }
+
+    // Sort wonders
+    function sortWonders() {
+      const sortValue = document.getElementById('sort-by').value;
+      const [field, direction] = sortValue.split('-');
+      
+      const sorted = [...wonders].sort((a, b) => {
+        // Handle cases where year might be missing
+        if (field === 'year') {
+          const yearA = a.year || 0;
+          const yearB = b.year || 0;
+          return direction === 'asc' ? yearA - yearB : yearB - yearA;
+        } else {
+          // Sort by name
+          const nameA = a.name.toLowerCase();
+          const nameB = b.name.toLowerCase();
+          return direction === 'asc' 
+            ? nameA.localeCompare(nameB) 
+            : nameB.localeCompare(nameA);
+        }
+      });
+      
+      renderWonders(sorted);
+    }
+
+    // Handle like button clicks
+    function handleLike(e) {
+      const button = e.currentTarget;
+      const wonderId = button.dataset.id;
+      
+      // Toggle liked state
+      const isLiked = localStorage.getItem(`wonder-${wonderId}-liked`) === 'true';
+      const newLikedState = !isLiked;
+      
+      // Update likes count
+      let likes = parseInt(localStorage.getItem(`wonder-${wonderId}-likes`)) || 0;
+      likes = newLikedState ? likes + 1 : likes - 1;
+      
+      // Save to localStorage
+      localStorage.setItem(`wonder-${wonderId}-liked`, newLikedState);
+      localStorage.setItem(`wonder-${wonderId}-likes`, likes);
+      
+      // Update UI
+      button.classList.toggle('liked', newLikedState);
+      button.querySelector('.likes').textContent = likes;
+    }
+
+    // Handle share button clicks
+    function handleShare(e) {
+      const wonderName = e.currentTarget.dataset.name;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: `Maravilla: ${wonderName}`,
+          text: `Mira esta maravilla del mundo: ${wonderName}`,
+          url: window.location.href
+        }).catch(err => {
+          console.log('Error sharing:', err);
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        alert(`Compartir: ${wonderName}\nURL: ${window.location.href}`);
+      }
+    }
+
+    // Toggle between light/dark theme
+ function toggleTheme() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  
+  if (currentTheme === 'dark') {
+    html.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
+  } else {
+    html.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+  }
+}
+
+// Check saved theme on load
+function checkSavedTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+}
+
+// Initialize theme on page load
+document.addEventListener('DOMContentLoaded', () => {
+  checkSavedTheme();
+  
+  // Add event listener to theme toggle button
+  document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+});
+    // Check theme on load
+    checkSavedTheme();
+
+  // Auth functionality
+document.addEventListener('DOMContentLoaded', () => {
+  // Modal elements
+  const loginModal = document.getElementById('login-modal');
+  const signupModal = document.getElementById('signup-modal');
+  const loginBtn = document.getElementById('login-btn');
+  const signupBtn = document.getElementById('signup-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const closeButtons = document.querySelectorAll('.close');
+  
+  // Open modals
+  loginBtn.addEventListener('click', () => loginModal.style.display = 'block');
+  signupBtn.addEventListener('click', () => signupModal.style.display = 'block');
+  
+  // Close modals
+  closeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      loginModal.style.display = 'none';
+      signupModal.style.display = 'none';
+    });
+  });
+  
+  // Close when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === loginModal) loginModal.style.display = 'none';
+    if (e.target === signupModal) signupModal.style.display = 'none';
+  });
+  
+  // Check if user is logged in
+  checkAuthStatus();
+  
+  // Form submissions
+  document.getElementById('login-form').addEventListener('submit', handleLogin);
+  document.getElementById('signup-form').addEventListener('submit', handleSignup);
+  logoutBtn.addEventListener('click', handleLogout);
+});
+
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  
+  try {
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('username', data.username);
+      checkAuthStatus();
+      document.getElementById('login-modal').style.display = 'none';
+      alert('Inicio de sesión exitoso');
+    } else {
+      alert(data.message || 'Error al iniciar sesión');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error al conectar con el servidor');
+  }
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  const name = document.getElementById('signup-name').value;
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+  
+  try {
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      alert('Registro exitoso. Por favor inicie sesión.');
+      document.getElementById('signup-modal').style.display = 'none';
+    } else {
+      alert(data.message || 'Error al registrarse');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error al conectar con el servidor');
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem('authToken');
+  localStorage.removeItem('username');
+  checkAuthStatus();
+}
+
+function checkAuthStatus() {
+  const authButtons = document.getElementById('auth-buttons');
+  const userMenu = document.getElementById('user-menu');
+  const token = localStorage.getItem('authToken');
+  
+  if (token) {
+    authButtons.style.display = 'none';
+    userMenu.style.display = 'block';
+    document.getElementById('username-display').textContent = localStorage.getItem('username');
+  } else {
+    authButtons.style.display = 'block';
+    userMenu.style.display = 'none';
+  }
+}
+// Modify these functions in your code:
+
+async function handleLogin(e) {
+  e.preventDefault();
+  // Simulate successful login
+  localStorage.setItem('authToken', 'simulated-token');
+  localStorage.setItem('username', document.getElementById('login-email').value.split('@')[0]);
+  checkAuthStatus();
+  document.getElementById('login-modal').style.display = 'none';
+  alert('Simulated login successful');
+}
+
+async function handleSignup(e) {
+  e.preventDefault();
+  // Simulate successful signup
+  alert('Simulated registration complete. Please login.');
+  document.getElementById('signup-modal').style.display = 'none';
+}
+  </script>
+</body>
+</html>

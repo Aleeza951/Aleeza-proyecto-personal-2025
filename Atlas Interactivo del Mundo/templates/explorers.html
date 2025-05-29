@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exploradores - Atlas Interactivo del Mundo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+</head>
+<body>
+  <style>
+    /* Base Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+header {
+  background: linear-gradient(135deg, #2c3e50, #3498db);
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+main {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Controls */
+.controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.controls input, .controls select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Explorer Cards */
+.explorers-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.explorer-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.explorer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.explorer-image-container {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.explorer-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.explorer-card:hover .explorer-image {
+  transform: scale(1.05);
+}
+
+.nationality-flag {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px white;
+}
+
+.explorer-info {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.explorer-info h3 {
+  margin: 0 0 0.5rem 0;
+  color: #2c3e50;
+}
+
+.meta-info {
+  display: flex;
+  justify-content: space-between;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.achievements {
+  flex-grow: 1;
+  margin: 0.5rem 0;
+}
+
+.btn-more-info {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  align-self: flex-start;
+  transition: background 0.3s;
+}
+
+.btn-more-info:hover {
+  background: #2980b9;
+}
+
+/* Visualization Containers */
+.visualization-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .visualization-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.map-container, .timeline-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#explorers-map {
+  height: 400px;
+  border-radius: 4px;
+}
+
+#exploration-timeline {
+  height: 400px;
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+  animation: modalopen 0.3s;
+}
+
+@keyframes modalopen {
+  from {opacity: 0; transform: translateY(-50px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+.close-modal {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #7f8c8d;
+}
+
+.close-modal:hover {
+  color: #333;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.modal-image img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.modal-meta {
+  margin-top: 1rem;
+}
+
+.modal-bio h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #2c3e50;
+  color: white;
+  margin-top: 2rem;
+}
+  </style>
+  <header>
+    <h1>Atlas Interactivo del Mundo</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}">Inicio</a></li>
+        <li><a href="{{ url_for('atlas') }}">Atlas</a></li>
+        <li><a href="{{ url_for('wonders') }}">Maravillas del Mundo</a></li>
+        <li><a href="{{ url_for('explorers') }}">Exploradores</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <h2>Grandes Exploradores</h2>
+    
+    <div class="controls">
+      <input type="text" id="explorer-search" placeholder="Buscar exploradores...">
+      <select id="country-filter">
+        <option value="all">Todos los países</option>
+      </select>
+      <select id="century-filter">
+        <option value="all">Todos los siglos</option>
+        <option value="15">Siglo XV</option>
+        <option value="16">Siglo XVI</option>
+        <option value="17">Siglo XVII</option>
+        <option value="18">Siglo XVIII</option>
+        <option value="19">Siglo XIX</option>
+      </select>
+      <select id="sort-explorers">
+        <option value="name-asc">Nombre (A-Z)</option>
+        <option value="name-desc">Nombre (Z-A)</option>
+        <option value="year-asc">Año más antiguo</option>
+        <option value="year-desc">Año más reciente</option>
+      </select>
+    </div>
+    
+    <div class="visualization-container">
+      <div class="map-container">
+        <h3>Rutas de Exploración</h3>
+        <div id="explorers-map"></div>
+      </div>
+      <div class="timeline-container">
+        <h3>Línea de Tiempo</h3>
+        <div id="exploration-timeline"></div>
+      </div>
+    </div>
+    
+    <div class="explorers-container" id="explorers-list">
+      <!-- Contenido generado dinámicamente -->
+    </div>
+  </main>
+  
+  <div id="explorer-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2023 Atlas Interactivo del Mundo</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="{{ url_for('static', filename='js/explorers.js') }}"></script>
+</body>
+</html>

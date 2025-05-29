@@ -1,0 +1,791 @@
+/* 🔹 VARIABLES */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --accent-color: #e74c3c;
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --white-color: #fff;
+  --border-radius: 12px;
+  --font-family: 'Arial', sans-serif;
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔹 ESTILO GENERAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  font-size: 16px;
+  padding-top: 80px; /* Espacio para el navbar fijo */
+}
+
+/* Header styles */
+header {
+  background: linear-gradient(135deg, #2c3e50, #34495e);
+  color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+header h1 {
+  padding: 20px;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+header h1 i.fas.fa-globe-americas {
+  margin-right: 15px;
+  color: #f39c12;
+  font-size: 2.2rem;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+nav {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  padding: 15px 25px;
+  font-weight: 500;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+nav ul li a i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+nav ul li a:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #f39c12;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav ul li a:hover:before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+nav ul li a.active {
+  background-color: #3498db;
+  font-weight: 600;
+}
+
+nav ul li a.active:before {
+  transform: scaleX(1);
+}
+
+
+/* 🔹 SECCIÓN HERO */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/static/images/world-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  color: var(--white-color);
+  text-align: center;
+  padding: 80px 20px;
+  margin-bottom: 40px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.hero h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 700px;
+  margin: 0 auto;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Modificar la sección del mapa para crear un diseño de dos columnas */
+.world-map-container {
+  text-align: center;
+  margin: 40px auto;
+  max-width: 1200px;
+  padding: 20px;
+  background-color: var(--white-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.world-map-container h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--primary-color);
+}
+
+.world-map-container p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.map-countries-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.map-container {
+  flex: 0 0 500px;
+}
+
+#world-map {
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border: 5px solid var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+#world-map:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos para la lista de países */
+.countries-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.countries-list li {
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.countries-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.countries-list li.highlighted {
+  background-color: #e3f2fd;
+}
+
+.countries-list li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+}
+
+.countries-list li i {
+  margin-right: 8px;
+  color: #3498db;
+}
+
+/* Estilos para el mapa circular */
+#world-map {
+  height: 500px;
+  width: 500px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  border: 5px solid var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+#world-map:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.circular-map {
+  border-radius: 50% !important;
+  overflow: hidden !important;
+}
+
+/* Estilos para los resultados de búsqueda */
+.countries-list li.highlighted {
+  background-color: rgba(52, 152, 219, 0.1);
+  border-left: 4px solid var(--primary-color);
+  font-weight: bold;
+}
+
+.countries-list li.highlighted i {
+  color: var(--primary-color);
+}
+
+.countries-list li.highlighted a {
+  color: var(--primary-color);
+}
+
+/* Estilos para la barra de búsqueda */
+.country-search {
+  margin-bottom: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.country-search input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 2px solid #ddd;
+  border-radius: 25px 0 0 25px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.country-search input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+.country-search i.fa-search {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+/* Botón de búsqueda */
+.search-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+.search-button i {
+  font-size: 16px;
+}
+
+/* Añadir un indicador de búsqueda activa */
+.search-active .country-search::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0.7;
+  }
+}
+
+/* Efecto de pulso para el marcador destacado */
+.pulse-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(52, 152, 219, 0.4);
+  border: 2px solid var(--primary-color);
+  box-shadow: 0 0 0 rgba(52, 152, 219, 0.4);
+  animation: pulse 2s infinite;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(2);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Estilos responsive */
+@media (max-width: 992px) {
+  .map-countries-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .countries-container {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  #world-map {
+    height: 400px;
+    width: 400px;
+  }
+  
+  .map-container {
+    flex: 0 0 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  #world-map {
+    height: 300px;
+    width: 300px;
+  }
+  
+  .map-container {
+    flex: 0 0 300px;
+  }
+  
+  .countries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+/* 🔹 SECCIÓN DE CARACTERÍSTICAS */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin: 50px auto;
+  max-width: 1200px;
+  padding: 0 20px;
+}
+
+.feature {
+  background-color: var(--white-color);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  text-align: center;
+  transition: all 0.3s ease;
+  border-top: 5px solid var(--primary-color);
+}
+
+.feature:nth-child(2) {
+  border-top-color: var(--secondary-color);
+}
+
+.feature:nth-child(3) {
+  border-top-color: var(--accent-color);
+}
+
+.feature:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.feature p {
+  color: #666;
+}
+
+/* 🔹 PIE DE PÁGINA */
+footer {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: var(--white-color);
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 50px;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+     /* Estilos para la línea de tiempo */
+  .world-timeline {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    margin-top: 50px;
+    border-radius: 10px;
+  }
+  
+  .world-timeline h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #2c3e50;
+  }
+  
+  .world-timeline p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #7f8c8d;
+  }
+  
+  /* Filtros de la línea de tiempo */
+  .timeline-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
+  
+  .filter-btn {
+    background-color: #f1f1f1;
+    border: none;
+    color: #555;
+    padding: 8px 16px;
+    margin: 0 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .filter-btn:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .filter-btn.active {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .timeline-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    padding: 20px 0;
+  }
+  
+  .timeline {
+    position: relative;
+  }
+  
+  .timeline::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #3498db;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -2px;
+    border-radius: 2px;
+  }
+  
+  .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+  }
+  
+  .timeline-item:nth-child(odd) {
+    left: 0;
+    text-align: right;
+  }
+  
+  .timeline-item:nth-child(even) {
+    left: 50%;
+    text-align: left;
+  }
+  
+  .timeline-dot {
+    width: 20px;
+    height: 20px;
+    background-color: #3498db;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    z-index: 1;
+  }
+  
+  .timeline-item:nth-child(odd) .timeline-dot {
+    right: -10px;
+  }
+  
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: -10px;
+  }
+  
+  .timeline-date {
+    font-weight: bold;
+    color: #3498db;
+    margin-bottom: 5px;
+  }
+  
+  .timeline-content {
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .timeline-content h4 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  
+  .timeline-content p {
+    margin-bottom: 10px;
+    text-align: left;
+    color: #34495e;
+  }
+  
+  /* Imágenes en la línea de tiempo */
+  .timeline-image {
+    margin-top: 10px;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  
+  .timeline-image img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease;
+  }
+  
+  .timeline-image img:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Animación al hacer scroll */
+  .timeline-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+    /* Estilos para el modal de imágenes */
+  .timeline-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .timeline-modal-content {
+    position: relative;
+    max-width: 80%;
+    max-height: 80%;
+  }
+  
+  .timeline-modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border: 2px solid white;
+    border-radius: 4px;
+  }
+  
+  .timeline-modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  /* Responsive */
+  @media (max-width: 767px) {
+    .timeline::before {
+      left: 40px;
+    }
+    
+    .timeline-item {
+      width: 100%;
+      padding-left: 70px;
+      padding-right: 20px;
+      left: 0;
+      text-align: left;
+    }
+    
+    .timeline-item:nth-child(odd) .timeline-dot {
+      left: 30px;
+      right: auto;
+    }
+    
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: 30px;
+    }
+  }
+    
+    /* Responsive */
+    @media (max-width: 767px) {
+      .timeline::before {
+        left: 40px;
+      }
+      
+      .timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 20px;
+        left: 0;
+        text-align: left;
+      }
+      
+      .timeline-item:nth-child(odd) .timeline-dot {
+        left: 30px;
+        right: auto;
+      }
+      
+      .timeline-item:nth-child(even) .timeline-dot {
+        left: 30px;
+      }
+    }
+
+/* 🔹 RESPONSIVE */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 24px;
+  }
+  
+  nav ul li {
+    margin: 0 8px;
+  }
+  
+  nav ul li a {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+  
+  .hero h2 {
+    font-size: 28px;
+  }
+  
+  .hero p {
+    font-size: 16px;
+  }
+  
+  #world-map {
+    height: 300px;
+    width: 300px;
+  }
+  
+  .features {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 120px;
+  }
+  
+  nav ul {
+    flex-wrap: wrap;
+  }
+  
+  nav ul li {
+    margin: 5px;
+  }
+  
+  #world-map {
+    height: 250px;
+    width: 250px;
+  }
+  
+  .countries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}

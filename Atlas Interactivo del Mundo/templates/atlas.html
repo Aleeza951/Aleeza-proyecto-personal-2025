@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Interactivo del Mundo</title>
+     <link rel="stylesheet" href="{{ url_for('static', filename='css/atlas.css') }}">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-globe-americas"></i> Atlas Interactivo del Mundo</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a href="{{ url_for('atlas') }}" class="active"><i class="fas fa-map-marked-alt"></i> Atlas</a></li>
+        <li><a href="{{ url_for('wonders') }}"><i class="fas fa-monument"></i> Maravillas</a></li>
+        <li><a href="{{ url_for('explorers') }}"><i class="fas fa-hiking"></i> Exploradores</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="atlas-header">
+      <h2><i class="fas fa-map-marked-alt"></i> Atlas Mundial</h2>
+      <p>Explora países y regiones de todo el mundo. Haz clic en cualquier país para obtener información detallada.</p>
+    </section>
+    
+    <section class="atlas-controls">
+      <div class="search-container">
+        <input type="text" id="country-search" placeholder="Buscar país...">
+        <button id="search-button" class="search-button">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      
+      <div class="filter-container">
+        <label for="continent-filter">Filtrar por continente:</label>
+        <select id="continent-filter">
+          <option value="all">Todos los continentes</option>
+          <option value="africa">África</option>
+          <option value="asia">Asia</option>
+          <option value="europe">Europa</option>
+          <option value="north_america">América del Norte</option>
+          <option value="south_america">América del Sur</option>
+          <option value="oceania">Oceanía</option>
+        </select>
+      </div>
+    </section>
+    
+    <section class="atlas-content">
+      <div class="map-container">
+        <div id="world-map"></div>
+      </div>
+      
+      <div class="country-info-panel" id="country-info">
+        <div class="panel-header">
+          <h3 id="country-name">Selecciona un país</h3>
+          <button id="close-panel"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <div class="panel-content">
+          <div class="country-flag" id="country-flag"></div>
+          
+          <div class="country-details">
+            <div class="detail-item">
+              <i class="fas fa-city"></i>
+              <span class="detail-label">Capital:</span>
+              <span id="country-capital">-</span>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-users"></i>
+              <span class="detail-label">Población:</span>
+              <span id="country-population">-</span>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-expand-arrows-alt"></i>
+              <span class="detail-label">Área:</span>
+              <span id="country-area">-</span>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-language"></i>
+              <span class="detail-label">Idiomas:</span>
+              <span id="country-languages">-</span>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-money-bill-wave"></i>
+              <span class="detail-label">Moneda:</span>
+              <span id="country-currency">-</span>
+            </div>
+            
+            <div class="detail-item">
+              <i class="fas fa-phone"></i>
+              <span class="detail-label">Código telefónico:</span>
+              <span id="country-phone-code">-</span>
+            </div>
+          </div>
+          
+          <div class="country-description" id="country-description">
+            <p>Selecciona un país en el mapa para ver su información detallada.</p>
+          </div>
+          
+          <div class="country-landmarks">
+            <h4><i class="fas fa-landmark"></i> Lugares destacados</h4>
+            <div class="landmarks-grid" id="landmarks-grid">
+              <!-- Los lugares destacados se cargarán dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="continent-stats">
+      <h3><i class="fas fa-chart-pie"></i> Estadísticas del Continente</h3>
+      <div id="continent-stats-content">
+        <p>Seleccione un continente para ver estadísticas</p>
+      </div>
+    </div>
+    
+    <section class="atlas-statistics">
+      <h3><i class="fas fa-chart-bar"></i> Estadísticas Globales</h3>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-globe-americas"></i></div>
+          <div class="stat-info">
+            <h4>Total de Países</h4>
+            <p class="stat-value">195</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-users"></i></div>
+          <div class="stat-info">
+            <h4>Población Mundial</h4>
+            <p class="stat-value">7.9 mil millones</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-city"></i></div>
+          <div class="stat-info">
+            <h4>Ciudades Principales</h4>
+            <p class="stat-value">4,416</p>
+          </div>
+        </div>
+        
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fas fa-language"></i></div>
+          <div class="stat-info">
+            <h4>Idiomas Hablados</h4>
+            <p class="stat-value">7,139</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="atlas-facts">
+      <h3><i class="fas fa-lightbulb"></i> Datos Curiosos</h3>
+      
+      <div class="facts-carousel">
+        <div class="fact-card active">
+          <h4>¿Sabías que...?</h4>
+          <p>Rusia es el país más grande del mundo, abarcando 11 zonas horarias diferentes.</p>
+        </div>
+        
+        <div class="fact-card">
+          <h4>¿Sabías que...?</h4>
+          <p>El Vaticano es el país más pequeño del mundo, con solo 0.44 km².</p>
+        </div>
+        
+        <div class="fact-card">
+          <h4>¿Sabías que...?</h4>
+          <p>Indonesia es el país con más islas del mundo, con más de 17,000 islas.</p>
+        </div>
+        
+        <div class="fact-card">
+          <h4>¿Sabías que...?</h4>
+          <p>El 90% de la población mundial vive en el hemisferio norte.</p>
+        </div>
+        
+        <div class="fact-navigation">
+          <button id="prev-fact"><i class="fas fa-chevron-left"></i></button>
+          <button id="next-fact"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>&copy; 2023 Atlas Interactivo del Mundo | Todos los derechos reservados</p>
+  </footer>
+  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializar el mapa
+      const map = L.map('world-map').setView([20, 0], 2);
+      
+      // Añadir capa de mapa base
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+      
+      // Datos de ejemplo para países con información de continente
+      const countriesData = {
+        'España': {
+          continent: 'europe',
+          capital: 'Madrid',
+          population: '47 millones',
+          area: '505,990 km²',
+          languages: 'Español, Catalán, Gallego, Euskera',
+          currency: 'Euro (EUR)',
+          phoneCode: '+34',
+          description: 'España, oficialmente el Reino de España, es un país transcontinental situado en Europa y África. Su territorio principal ocupa la mayor parte de la península ibérica.',
+          landmarks: [
+            { name: 'Sagrada Familia', image: 'https://images.unsplash.com/photo-1574279606136-ff2b9f2c0c3d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Alhambra', image: 'https://images.unsplash.com/photo-1552975084-6e027cd345c2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Plaza Mayor', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/es.png'
+        },
+        'Francia': {
+          continent: 'europe',
+          capital: 'París',
+          population: '67 millones',
+          area: '551,695 km²',
+          languages: 'Francés',
+          currency: 'Euro (EUR)',
+          phoneCode: '+33',
+          description: 'Francia, oficialmente la República Francesa, es un país soberano cuyo territorio metropolitano se encuentra en Europa Occidental. Es uno de los países más influyentes del mundo.',
+          landmarks: [
+            { name: 'Torre Eiffel', image: 'https://images.unsplash.com/photo-1549144511-f099e773c147?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Louvre', image: 'https://images.unsplash.com/photo-1597047084897-51e81819a499?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Catedral de Notre Dame', image: 'https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/fr.png'
+        },
+        'China': {
+          continent: 'asia',
+          capital: 'Pekín',
+          population: '1,412 millones',
+          area: '9,596,961 km²',
+          languages: 'Chino mandarín',
+          currency: 'Yuan (CNY)',
+          phoneCode: '+86',
+          description: 'China, oficialmente la República Popular China, es un país soberano situado en Asia Oriental. Es el país más poblado del mundo y tiene la segunda superficie territorial más grande.',
+          landmarks: [
+            { name: 'Gran Muralla', image: 'https://images.unsplash.com/photo-1542662565-7e4b66bae529?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Ciudad Prohibida', image: 'https://images.unsplash.com/photo-1598726668148-99946ef1cb42?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Ejército de Terracota', image: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/cn.png'
+        },
+        'Japón': {
+          continent: 'asia',
+          capital: 'Tokio',
+          population: '126 millones',
+          area: '377,975 km²',
+          languages: 'Japonés',
+          currency: 'Yen (JPY)',
+          phoneCode: '+81',
+          description: 'Japón es un país insular del este de Asia. Situado en el océano Pacífico, tiene al oeste el mar del Japón, China, Corea del Norte, Corea del Sur y Rusia.',
+          landmarks: [
+            { name: 'Monte Fuji', image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Torre de Tokio', image: 'https://images.unsplash.com/photo-1542052125323-1b7a553d6a45?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Templo Kinkaku-ji', image: 'https://images.unsplash.com/photo-1551649001-7a2482d98d09?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/jp.png'
+        },
+        'Egipto': {
+          continent: 'africa',
+          capital: 'El Cairo',
+          population: '104 millones',
+          area: '1,010,408 km²',
+          languages: 'Árabe',
+          currency: 'Libra egipcia (EGP)',
+          phoneCode: '+20',
+          description: 'Egipto, oficialmente la República Árabe de Egipto, es un país transcontinental que atraviesa la esquina noreste de África y la esquina suroeste de Asia.',
+          landmarks: [
+            { name: 'Pirámides de Giza', image: 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Valle de los Reyes', image: 'https://images.unsplash.com/photo-1564507004663-b6dfb3c824d5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Templo de Karnak', image: 'https://images.unsplash.com/photo-1575058752200-a9d6c0f41945?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/eg.png'
+        },
+        'Estados Unidos': {
+          continent: 'north_america',
+          capital: 'Washington D.C.',
+          population: '331 millones',
+          area: '9,833,517 km²',
+          languages: 'Inglés',
+          currency: 'Dólar estadounidense (USD)',
+          phoneCode: '+1',
+          description: 'Estados Unidos es un país de América, constituido en una república federal constitucional compuesta por cincuenta estados y un distrito federal.',
+          landmarks: [
+            { name: 'Estatua de la Libertad', image: 'https://images.unsplash.com/photo-1548013146-72479768bada?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Gran Cañón', image: 'https://images.unsplash.com/photo-1509316785289-025f5b846b35?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Monte Rushmore', image: 'https://images.unsplash.com/photo-1585862706393-9e9d9e4ad8f5?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/us.png'
+        },
+        'Brasil': {
+          continent: 'south_america',
+          capital: 'Brasilia',
+          population: '213 millones',
+          area: '8,515,767 km²',
+          languages: 'Portugués',
+          currency: 'Real brasileño (BRL)',
+          phoneCode: '+55',
+          description: 'Brasil, oficialmente República Federativa de Brasil, es un país soberano de América del Sur que comprende la mitad oriental del continente y algunos grupos de islas.',
+          landmarks: [
+            { name: 'Cristo Redentor', image: 'https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Cataratas del Iguazú', image: 'https://images.unsplash.com/photo-1551650992-ee4fd47df41f?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Amazonas', image: 'https://images.unsplash.com/photo-1619546952812-520e98064a52?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/br.png'
+        },
+        'Australia': {
+          continent: 'oceania',
+          capital: 'Canberra',
+          population: '25 millones',
+          area: '7,692,024 km²',
+          languages: 'Inglés',
+          currency: 'Dólar australiano (AUD)',
+          phoneCode: '+61',
+          description: 'Australia, oficialmente la Mancomunidad de Australia, es un país soberano de Oceanía, cuya forma de gobierno es la monarquía constitucional federal parlamentaria.',
+          landmarks: [
+            { name: 'Ópera de Sídney', image: 'https://images.unsplash.com/photo-1523428096881-5bd79d043006?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Gran Barrera de Coral', image: 'https://images.unsplash.com/photo-1579783483459-9a53d55be8c1?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' },
+            { name: 'Uluru', image: 'https://images.unsplash.com/photo-1565958011705-4a1b4b7b6fad?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=150&w=150' }
+          ],
+          flag: 'https://flagcdn.com/w320/au.png'
+        }
+      };
+      
+      // Estadísticas de continentes
+      const continentStats = {
+        'africa': {
+          countries: 54,
+          population: '1.3 mil millones',
+          languages: 2000,
+          area: '30.37 millones km²',
+          description: 'África es el tercer continente más grande del mundo, con una rica diversidad cultural y natural.'
+        },
+        'asia': {
+          countries: 48,
+          population: '4.6 mil millones',
+          languages: 2300,
+          area: '44.58 millones km²',
+          description: 'Asia es el continente más grande y poblado del mundo, con una gran variedad de culturas y paisajes.'
+        },
+        'europe': {
+          countries: 44,
+          population: '747 millones',
+          languages: 225,
+          area: '10.18 millones km²',
+          description: 'Europa es conocida por su rica historia, diversidad cultural y desarrollo económico.'
+        },
+        'north_america': {
+          countries: 23,
+          population: '592 millones',
+          languages: 400,
+          area: '24.71 millones km²',
+          description: 'América del Norte alberga algunos de los países más desarrollados del mundo.'
+        },
+        'south_america': {
+          countries: 12,
+          population: '430 millones',
+          languages: 450,
+          area: '17.84 millones km²',
+          description: 'América del Sur es conocida por su biodiversidad, selvas y culturas indígenas.'
+        },
+        'oceania': {
+          countries: 14,
+          population: '42 millones',
+          languages: 1000,
+          area: '8.52 millones km²',
+          description: 'Oceanía es un continente insular que incluye Australia, Nueva Zelanda y miles de islas del Pacífico.'
+        }
+      };
+
+      // Función para mostrar información del país
+      function showCountryInfo(countryName) {
+        const countryInfo = document.getElementById('country-info');
+        const countryData = countriesData[countryName];
+        
+        if (countryData) {
+          document.getElementById('country-name').textContent = countryName;
+          document.getElementById('country-capital').textContent = countryData.capital;
+          document.getElementById('country-population').textContent = countryData.population;
+          document.getElementById('country-area').textContent = countryData.area;
+          document.getElementById('country-languages').textContent = countryData.languages;
+          document.getElementById('country-currency').textContent = countryData.currency;
+          document.getElementById('country-phone-code').textContent = countryData.phoneCode;
+          document.getElementById('country-description').innerHTML = `<p>${countryData.description}</p>`;
+          
+          // Establecer la bandera como imagen de fondo
+          const flagElement = document.getElementById('country-flag');
+          flagElement.style.backgroundImage = `url(${countryData.flag})`;
+          flagElement.style.backgroundSize = 'contain';
+          flagElement.style.backgroundRepeat = 'no-repeat';
+          flagElement.style.backgroundPosition = 'center';
+          
+          // Mostrar lugares destacados
+          const landmarksGrid = document.getElementById('landmarks-grid');
+          landmarksGrid.innerHTML = '';
+          
+          if (countryData.landmarks && countryData.landmarks.length > 0) {
+            countryData.landmarks.forEach(landmark => {
+              const landmarkElement = document.createElement('div');
+              landmarkElement.className = 'landmark-item';
+              landmarkElement.innerHTML = `
+                <div class="landmark-image" style="background-image: url(${landmark.image})"></div>
+                <p class="landmark-name">${landmark.name}</p>
+              `;
+              landmarksGrid.appendChild(landmarkElement);
+            });
+          } else {
+            landmarksGrid.innerHTML = '<p>No hay lugares destacados disponibles.</p>';
+          }
+          
+          // Mostrar el panel
+          countryInfo.classList.add('active');
+        }
+      }
+      
+      // Función para mostrar estadísticas del continente
+      function showContinentStats(continent) {
+        const statsContent = document.getElementById('continent-stats-content');
+        const stats = continentStats[continent];
+        
+        if (stats) {
+          statsContent.innerHTML = `
+            <p>${stats.description}</p>
+            <div class="stats-row">
+              <span class="stat-label">Número de países:</span>
+              <span class="stat-number">${stats.countries}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stat-label">Población total:</span>
+              <span class="stat-number">${stats.population}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stat-label">Idiomas hablados:</span>
+              <span class="stat-number">${stats.languages}</span>
+            </div>
+            <div class="stats-row">
+              <span class="stat-label">Área total:</span>
+              <span class="stat-number">${stats.area}</span>
+            </div>
+          `;
+        } else {
+          statsContent.innerHTML = '<p>Seleccione un continente para ver estadísticas</p>';
+        }
+      }
+      
+      // Cerrar panel de información
+      document.getElementById('close-panel').addEventListener('click', function() {
+        document.getElementById('country-info').class.classList.remove('active');
+      });
+      
+      // Navegación del carrusel de datos curiosos
+      let currentFactIndex = 0;
+      const factCards = document.querySelectorAll('.fact-card');
+      
+      function showFact(index) {
+        factCards.forEach((card, i) => {
+          card.style.display = i === index ? 'block' : 'none';
+        });
+      }
+      
+      // Mostrar el primer dato curioso
+      showFact(currentFactIndex);
+      
+      // Botones de navegación
+      document.getElementById('next-fact').addEventListener('click', function() {
+        currentFactIndex = (currentFactIndex + 1) % factCards.length;
+        showFact(currentFactIndex);
+      });
+      
+      document.getElementById('prev-fact').addEventListener('click', function() {
+        currentFactIndex = (currentFactIndex - 1 + factCards.length) % factCards.length;
+        showFact(currentFactIndex);
+      });
+      
+      // Búsqueda de países
+      document.getElementById('search-button').addEventListener('click', function() {
+        const searchTerm = document.getElementById('country-search').value.trim();
+        
+        if (searchTerm) {
+          const foundCountry = Object.keys(countriesData).find(country => 
+            country.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+          
+          if (foundCountry) {
+            showCountryInfo(foundCountry);
+          } else {
+            alert('País no encontrado. Intenta con otro nombre.');
+          }
+        }
+      });
+      
+      // También permitir búsqueda al presionar Enter
+      document.getElementById('country-search').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          document.getElementById('search-button').click();
+        }
+      });
+      
+      // Filtro de continentes
+      document.getElementById('continent-filter').addEventListener('change', function() {
+        const selectedContinent = this.value;
+        
+        // Mostrar estadísticas del continente
+        showContinentStats(selectedContinent);
+        
+        // Si se selecciona un continente específico, mostrar un país de ejemplo
+        if (selectedContinent !== 'all') {
+          // Encontrar un país del continente seleccionado
+          const continentCountry = Object.keys(countriesData).find(
+            country => countriesData[country].continent === selectedContinent
+          );
+          
+          if (continentCountry) {
+            showCountryInfo(continentCountry);
+          }
+        } else {
+          // Ocultar el panel si se selecciona "Todos los continentes"
+          document.getElementById('country-info').classList.remove('active');
+        }
+      });
+      
+      // Mostrar España como ejemplo inicial
+      setTimeout(() => {
+        showCountryInfo('España');
+        showContinentStats('europe');
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Interactivo del Mundo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Añadir Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+</head>
+<body>
+  <header>
+    <h1><i class="fas fa-globe-americas"></i> Atlas Interactivo del Mundo</h1>
+    <nav>
+      <ul>
+        <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
+        <li><a href="{{ url_for('atlas') }}"><i class="fas fa-map-marked-alt"></i> Atlas</a></li>
+        <li><a href="{{ url_for('wonders') }}"><i class="fas fa-monument"></i> Maravillas</a></li>
+        <li><a href="{{ url_for('explorers') }}"><i class="fas fa-hiking"></i> Exploradores</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <section class="hero">
+      <h2>Explora el mundo desde tu navegador</h2>
+      <p>Descubre países, maravillas del mundo y grandes exploradores en esta aplicación interactiva.</p>
+    </section>
+    
+    <!-- Mapa circular y lista de países -->
+    <section class="world-map-container">
+      <h3><i class="fas fa-globe"></i> Mapa Mundial Interactivo</h3>
+      <p>Haz clic en cualquier país para explorar su información</p>
+      
+      <div class="map-countries-container">
+        <!-- Contenedor del mapa -->
+        <div class="map-container">
+          <div id="world-map" class="circular-map"></div>
+        </div>
+        
+        <!-- Contenedor de la lista de países -->
+        <div class="countries-container">
+          <h4><i class="fas fa-list"></i> Países del Mundo</h4>
+          
+          <!-- Lista de países ordenados alfabéticamente de A a Z -->
+          <ul class="countries-list">
+            <li data-lat="34.5553" data-lng="69.2075"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Afganistán</a></li>
+            <li data-lat="41.3275" data-lng="19.8187"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Albania</a></li>
+            <li data-lat="51.1657" data-lng="10.4515"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Alemania</a></li>
+            <li data-lat="42.5063" data-lng="1.5218"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Andorra</a></li>
+            <li data-lat="-11.2027" data-lng="17.8739"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Angola</a></li>
+            <li data-lat="18.2206" data-lng="-63.0686"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Anguila</a></li>
+            <li data-lat="-80.3464" data-lng="19.2806"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Antártida</a></li>
+            <li data-lat="17.0608" data-lng="-61.7964"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Antigua y Barbuda</a></li>
+            <li data-lat="23.4241" data-lng="53.8478"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Arabia Saudita</a></li>
+            <li data-lat="28.0339" data-lng="1.6596"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Argelia</a></li>
+            <li data-lat="-34.6037" data-lng="-58.3816"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Argentina</a></li>
+            <li data-lat="40.0691" data-lng="45.0382"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Armenia</a></li>
+            <li data-lat="12.5211" data-lng="-69.9683"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Aruba</a></li>
+            <li data-lat="-25.2744" data-lng="133.7751"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Australia</a></li>
+            <li data-lat="47.5162" data-lng="14.5501"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Austria</a></li>
+            <li data-lat="40.1431" data-lng="47.5769"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Azerbaiyán</a></li>
+            <li data-lat="25.0343" data-lng="-77.3963"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bahamas</a></li>
+            <li data-lat="26.0275" data-lng="50.5500"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Baréin</a></li>
+            <li data-lat="23.6850" data-lng="90.3563"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bangladés</a></li>
+            <li data-lat="13.1939" data-lng="-59.5432"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Barbados</a></li>
+            <li data-lat="50.8503" data-lng="4.3517"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bélgica</a></li>
+            <li data-lat="17.1899" data-lng="-88.4976"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Belice</a></li>
+            <li data-lat="9.3077" data-lng="2.3158"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Benín</a></li>
+            <li data-lat="32.3078" data-lng="-64.7505"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bermudas</a></li>
+            <li data-lat="53.7098" data-lng="27.9534"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bielorrusia</a></li>
+            <li data-lat="-16.2902" data-lng="-63.5887"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bolivia</a></li>
+            <li data-lat="43.9159" data-lng="17.6791"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bosnia y Herzegovina</a></li>
+            <li data-lat="-22.3285" data-lng="24.6849"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Botsuana</a></li>
+            <li data-lat="-14.2350" data-lng="-51.9253"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Brasil</a></li>
+            <li data-lat="4.5353" data-lng="114.7277"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Brunéi</a></li>
+            <li data-lat="42.7339" data-lng="25.4858"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Bulgaria</a></li>
+            <li data-lat="12.2383" data-lng="-1.5616"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Burkina Faso</a></li>
+            <li data-lat="-3.3731" data-lng="29.9189"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Burundi</a></li>
+            <li data-lat="12.5657" data-lng="104.9910"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Camboya</a></li>
+            <li data-lat="7.3697" data-lng="12.3547"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Camerún</a></li>
+            <li data-lat="56.1304" data-lng="-106.3468"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Canadá</a></li>
+            <li data-lat="16.5388" data-lng="-23.0418"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Cabo Verde</a></li>
+            <li data-lat="12.5657" data-lng="104.9910"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Camboya</a></li>
+            <li data-lat="7.3697" data-lng="12.3547"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Camerún</a></li>
+            <li data-lat="56.1304" data-lng="-106.3468"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Canadá</a></li>
+            <li data-lat="16.5388" data-lng="-23.0418"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Cabo Verde</a></li>
+            <li data-lat="19.5130" data-lng="-80.5669"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Caimán</a></li>
+            <li data-lat="6.6111" data-lng="20.9394"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> República Centroafricana</a></li>
+            <li data-lat="15.4542" data-lng="18.7322"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Chad</a></li>
+            <li data-lat="-35.6751" data-lng="-71.5430"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Chile</a></li>
+            <li data-lat="35.8617" data-lng="104.1954"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> China</a></li>
+            <li data-lat="4.5709" data-lng="-74.2973"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Colombia</a></li>
+            <li data-lat="-11.8750" data-lng="43.8722"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Comoras</a></li>
+            <li data-lat="-4.0383" data-lng="21.7587"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> República Democrática del Congo</a></li>
+            <li data-lat="-0.2280" data-lng="15.8277"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> República del Congo</a></li>
+            <li data-lat="9.7489" data-lng="-83.7534"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Costa Rica</a></li>
+            <li data-lat="45.1000" data-lng="15.2000"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Croacia</a></li>
+            <li data-lat="21.5218" data-lng="-77.7812"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Cuba</a></li>
+            <li data-lat="35.1264" data-lng="33.4299"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Chipre</a></li>
+            <li data-lat="49.8175" data-lng="15.4730"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> República Checa</a></li>
+            <li data-lat="56.2639" data-lng="9.5018"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Dinamarca</a></li>
+            <li data-lat="11.8251" data-lng="42.5903"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Yibuti</a></li>
+            <li data-lat="15.4150" data-lng="-61.3710"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Dominica</a></li>
+            <li data-lat="18.7357" data-lng="-70.1627"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> República Dominicana</a></li>
+            <li data-lat="-1.8312" data-lng="-78.1834"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Ecuador</a></li>
+            <li data-lat="26.8206" data-lng="30.8025"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Egipto</a></li>
+            <li data-lat="13.7942" data-lng="-88.8965"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> El Salvador</a></li>
+            <li data-lat="1.6508" data-lng="10.2679"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Guinea Ecuatorial</a></li>
+            <li data-lat="15.1794" data-lng="39.7823"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Eritrea</a></li>
+            <li data-lat="58.5953" data-lng="25.0136"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Estonia</a></li>
+            <li data-lat="9.1450" data-lng="40.4897"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Etiopía</a></li>
+            <li data-lat="-51.7963" data-lng="-59.5236"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Malvinas</a></li>
+            <li data-lat="61.8926" data-lng="-6.9118"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Feroe</a></li>
+            <li data-lat="-17.7134" data-lng="178.0650"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Fiyi</a></li>
+            <li data-lat="61.9241" data-lng="25.7482"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Finlandia</a></li>
+            <li data-lat="46.2276" data-lng="2.2137"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Francia</a></li>
+            <li data-lat="-0.8037" data-lng="11.6094"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Gabón</a></li>
+            <li data-lat="13.4432" data-lng="-15.3101"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Gambia</a></li>
+            <li data-lat="42.3154" data-lng="43.3569"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Georgia</a></li>
+            <li data-lat="51.1657" data-lng="10.4515"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Alemania</a></li>
+            <li data-lat="7.9465" data-lng="-1.0232"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Ghana</a></li>
+            <li data-lat="36.1408" data-lng="-5.3536"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Gibraltar</a></li>
+            <li data-lat="39.0742" data-lng="21.8243"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Grecia</a></li>
+            <li data-lat="71.7069" data-lng="-42.6043"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Groenlandia</a></li>
+            <li data-lat="12.1165" data-lng="-61.6790"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Granada</a></li>
+            <li data-lat="15.7835" data-lng="-90.2308"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Guatemala</a></li>
+            <li data-lat="9.9456" data-lng="-9.6966"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Guinea</a></li>
+            <li data-lat="11.8037" data-lng="-15.1804"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Guinea-Bisáu</a></li>
+            <li data-lat="4.8604" data-lng="-58.9302"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Guyana</a></li>
+            <li data-lat="18.9712" data-lng="-72.2852"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Haití</a></li>
+            <li data-lat="15.2000" data-lng="-86.2419"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Honduras</a></li>
+            <li data-lat="47.1625" data-lng="19.5033"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Hungría</a></li>
+            <li data-lat="64.9631" data-lng="-19.0208"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islandia</a></li>
+            <li data-lat="20.5937" data-lng="78.9629"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> India</a></li>
+            <li data-lat="-0.7893" data-lng="113.9213"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Indonesia</a></li>
+            <li data-lat="32.4279" data-lng="53.6880"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Irán</a></li>
+            <li data-lat="33.2232" data-lng="43.6793"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Irak</a></li>
+            <li data-lat="53.1424" data-lng="-7.6921"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Irlanda</a></li>
+            <li data-lat="31.0461" data-lng="34.8516"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Israel</a></li>
+            <li data-lat="41.8719" data-lng="12.5674"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Italia</a></li>
+            <li data-lat="18.1096" data-lng="-77.2975"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Jamaica</a></li>
+            <li data-lat="36.2048" data-lng="138.2529"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Japón</a></li>
+            <li data-lat="30.5852" data-lng="36.2384"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Jordania</a></li>
+            <li data-lat="48.0196" data-lng="66.9237"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Kazajistán</a></li>
+            <li data-lat="-0.0236" data-lng="37.9062"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Kenia</a></li>
+            <li data-lat="29.3117" data-lng="47.4818"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Kuwait</a></li>
+            <li data-lat="41.2044" data-lng="74.7661"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Kirguistán</a></li>
+            <li data-lat="19.8563" data-lng="102.4955"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Laos</a></li>
+            <li data-lat="56.8796" data-lng="24.6032"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Letonia</a></li>
+            <li data-lat="33.8547" data-lng="35.8623"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Líbano</a></li>
+            <li data-lat="-29.6099" data-lng="28.2336"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Lesoto</a></li>
+            <li data-lat="6.4281" data-lng="-9.4295"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Liberia</a></li>
+            <li data-lat="26.3351" data-lng="17.2283"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Libia</a></li>
+            <li data-lat="47.1410" data-lng="9.5209"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Liechtenstein</a></li>
+            <li data-lat="55.1694" data-lng="23.8813"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Lituania</a></li>
+            <li data-lat="49.8153" data-lng="6.1296"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Luxemburgo</a></li>
+            <li data-lat="-18.7669" data-lng="46.8691"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Madagascar</a></li>
+            <li data-lat="-13.2543" data-lng="34.3015"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Malaui</a></li>
+            <li data-lat="4.2105" data-lng="101.9758"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Malasia</a></li>
+            <li data-lat="3.2028" data-lng="73.2207"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Maldivas</a></li>
+            <li data-lat="17.5707" data-lng="-3.9962"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Malí</a></li>
+            <li data-lat="35.9375" data-lng="14.3754"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Malta</a></li>
+            <li data-lat="21.0079" data-lng="-10.9408"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Mauritania</a></li>
+            <li data-lat="-20.3484" data-lng="57.5522"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Mauricio</a></li>
+            <li data-lat="23.6345" data-lng="-102.5528"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> México</a></li>
+            <li data-lat="4.5709" data-lng="15.2663"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Micronesia</a></li>
+            <li data-lat="47.1625" data-lng="19.5033"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Moldavia</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Suiza</a></li>
+            <li data-lat="43.7384" data-lng="7.4246"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Mónaco</a></li>
+            <li data-lat="46.8625" data-lng="103.8467"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Mongolia</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Montenegro</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Montserrat</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Marruecos</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Mozambique</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Myanmar</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Namibia</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nauru</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nepal</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Países Bajos</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nueva Caledonia</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nueva Zelanda</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nicaragua</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Niger</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Nigeria</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Noruega</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Níger</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Omán</a></li>
+            <li data-lat="30.3753" data-lng="69.3451"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Pakistán</a></li>
+            <li data-lat="7.5150" data-lng="134.5825"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Palau</a></li>
+            <li data-lat="31.9522" data-lng="35.2332"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Palestina</a></li>
+            <li data-lat="8.5375" data-lng="-80.7821"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Panamá</a></li>
+            <li data-lat="-6.3150" data-lng="143.9555"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Papúa Nueva Guinea</a></li>
+            <li data-lat="-23.4425" data-lng="-58.4438"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Paraguay</a></li>
+            <li data-lat="-9.1900" data-lng="-75.0152"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Perú</a></li>
+            <li data-lat="12.8797" data-lng="121.7740"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Filipinas</a></li>
+            <li data-lat="51.9194" data-lng="19.1451"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Polonia</a></li>
+            <li data-lat="39.3999" data-lng="-8.2245"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Portugal</a></li>
+            <li data-lat="18.2208" data-lng="-66.5901"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Puerto Rico</a></li>
+            <li data-lat="48.6690" data-lng="19.6990"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Eslovaquia</a></li>
+            <li data-lat="46.1512" data-lng="14.9955"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Eslovenia</a></li>
+            <li data-lat="9.0820" data-lng="168.7265"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Somalia</a></li>
+            <li data-lat="-30.5595" data-lng="22.9375"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Sudáfrica</a></li>
+            <li data-lat="40.4637" data-lng="-3.7492"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> España</a></li>
+            <li data-lat="7.8731" data-lng="80.7718"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Sri Lanka</a></li>
+            <li data-lat="12.8628" data-lng="30.2176"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Sudán</a></li>
+            <li data-lat="4.8594" data-lng="31.5713"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Sudán del Sur</a></li>
+            <li data-lat="3.9193" data-lng="-56.0278"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Surinam</a></li>
+            <li data-lat="-26.5225" data-lng="31.4659"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Suazilandia</a></li>
+            <li data-lat="60.1282" data-lng="18.6435"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Suecia</a></li>
+            <li data-lat="46.8182" data-lng="8.2275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Suiza</a></li>
+            <li data-lat="34.8021" data-lng="38.9968"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Siria</a></li>
+            <li data-lat="23.6978" data-lng="120.9605"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Taiwán</a></li>
+            <li data-lat="38.8610" data-lng="71.2761"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Tayikistán</a></li>
+            <li data-lat="-6.3690" data-lng="34.8888"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Tanzania</a></li>
+            <li data-lat="15.8700" data-lng="100.9925"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Tailandia</a></li>
+             <li data-lat="-8.8742" data-lng="125.7275"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Timor Oriental</a></li>
+            <li data-lat="8.6195" data-lng="0.8248"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Togo</a></li>
+            <li data-lat="-21.1789" data-lng="-175.1982"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Tonga</a></li>
+            <li data-lat="10.6918" data-lng="-61.2225"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Trinidad y Tobago</a></li>
+            <li data-lat="33.8869" data-lng="9.5375"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Túnez</a></li>
+            <li data-lat="38.9637" data-lng="35.2433"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Turquía</a></li>
+            <li data-lat="38.9697" data-lng="59.5563"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Turkmenistán</a></li>
+            <li data-lat="21.6940" data-lng="-71.7979"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Turcas y Caicos</a></li>
+            <li data-lat="-7.1095" data-lng="177.6493"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Tuvalu</a></li>
+            <li data-lat="1.3733" data-lng="32.2903"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Uganda</a></li>
+            <li data-lat="48.3794" data-lng="31.1656"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Ucrania</a></li>
+            <li data-lat="23.4241" data-lng="53.8478"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Emiratos Árabes Unidos</a></li>
+            <li data-lat="55.3781" data-lng="-3.4360"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Reino Unido</a></li>
+            <li data-lat="37.0902" data-lng="-95.7129"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Estados Unidos</a></li>
+            <li data-lat="-32.5228" data-lng="-55.7658"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Uruguay</a></li>
+            <li data-lat="41.3775" data-lng="64.5853"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Uzbekistán</a></li>
+            <li data-lat="-15.3767" data-lng="166.9592"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Vanuatu</a></li>
+            <li data-lat="41.9029" data-lng="12.4534"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Ciudad del Vaticano</a></li>
+            <li data-lat="6.4238" data-lng="-66.5897"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Venezuela</a></li>
+            <li data-lat="14.0583" data-lng="108.2772"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Vietnam</a></li>
+            <li data-lat="18.4207" data-lng="-64.6400"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Vírgenes Británicas</a></li>
+            <li data-lat="18.3358" data-lng="-64.8963"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Islas Vírgenes de EE.UU.</a></li>
+            <li data-lat="-13.7687" data-lng="-177.1561"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Wallis y Futuna</a></li>
+            <li data-lat="24.2155" data-lng="12.8858"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Sáhara Occidental</a></li>
+            <li data-lat="15.5527" data-lng="48.5164"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Yemen</a></li>
+            <li data-lat="-13.1339" data-lng="27.8493"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Zambia</a></li>
+            <li data-lat="-19.0154" data-lng="29.1549"><a href="#" class="country-link"><i class="fas fa-map-marker-alt"></i> Zimbabue</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+  
+
+      <section class="features">
+      <div class="feature">
+        <i class="fas fa-flag fa-3x" style="color: var(--primary-color); margin-bottom: 20px;"></i>
+        <h3>Países</h3>
+        <p>Información detallada sobre países de todo el mundo, incluyendo datos demográficos, económicos y culturales.</p>
+        </div>
+      <div class="feature">
+        <i class="fas fa-landmark fa-3x" style="color: var(--secondary-color); margin-bottom: 20px;"></i>
+        <h3>Maravillas</h3>
+        <p>Explora las maravillas naturales y construidas por el hombre a lo largo de la historia de la humanidad.</p>
+      </div>
+      <div class="feature">
+        <i class="fas fa-compass fa-3x" style="color: var(--accent-color); margin-bottom: 20px;"></i>
+        <h3>Exploradores</h3>
+        <p>Conoce a los grandes exploradores de la historia que descubrieron nuevas tierras y expandieron nuestro conocimiento del mundo.</p>
+      </div>
+    </section>
+  </main>
+  
+  <section class="world-timeline">
+  <h3><i class="fas fa-history"></i> Línea de Tiempo Histórica Mundial</h3>
+  <p>Descubre los eventos más importantes que han marcado la historia de nuestro planeta</p>
+  
+  <!-- Filtros por época -->
+  <div class="timeline-filters">
+    <button class="filter-btn active" data-filter="all">Todas las épocas</button>
+    <button class="filter-btn" data-filter="ancient">Antigüedad</button>
+    <button class="filter-btn" data-filter="medieval">Edad Media</button>
+    <button class="filter-btn" data-filter="modern">Edad Moderna</button>
+    <button class="filter-btn" data-filter="contemporary">Edad Contemporánea</button>
+  </div>
+  
+  <div class="timeline-container">
+    <div class="timeline">
+      <!-- Prehistoria -->
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">10000 a.C.</div>
+        <div class="timeline-content">
+          <h4>Revolución Neolítica</h4>
+          <p>Transición de sociedades nómadas de cazadores-recolectores a asentamientos agrícolas permanentes.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Revolución+Neolítica" alt="Revolución Neolítica">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Antigüedad -->
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">3500 a.C.</div>
+        <div class="timeline-content">
+          <h4>Invención de la escritura</h4>
+          <p>Los sumerios desarrollan la escritura cuneiforme, marcando el inicio de la historia escrita.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">3000 a.C.</div>
+        <div class="timeline-content">
+          <h4>Surgimiento de las primeras civilizaciones</h4>
+          <p>Mesopotamia, Egipto, India y China desarrollan las primeras grandes civilizaciones de la historia.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Primeras+Civilizaciones" alt="Primeras Civilizaciones">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2560 a.C.</div>
+        <div class="timeline-content">
+          <h4>Construcción de la Gran Pirámide de Giza</h4>
+          <p>La más grande de las pirámides egipcias, construida como tumba para el faraón Keops.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">776 a.C.</div>
+        <div class="timeline-content">
+          <h4>Primeros Juegos Olímpicos</h4>
+          <p>Se celebran los primeros Juegos Olímpicos registrados en la historia, en Olimpia, Grecia.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">509 a.C.</div>
+        <div class="timeline-content">
+          <h4>Fundación de la República Romana</h4>
+          <p>Tras la expulsión del último rey etrusco, se establece la República Romana.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">323 a.C.</div>
+        <div class="timeline-content">
+          <h4>Muerte de Alejandro Magno</h4>
+          <p>Fallece el conquistador macedonio tras crear uno de los imperios más grandes de la antigüedad.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Alejandro+Magno" alt="Alejandro Magno">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="ancient">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">27 a.C.</div>
+        <div class="timeline-content">
+          <h4>Inicio del Imperio Romano</h4>
+          <p>Octavio recibe el título de Augusto, convirtiéndose en el primer emperador romano.</p>
+        </div>
+      </div>
+      
+      <!-- Edad Media -->
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">476 d.C.</div>
+        <div class="timeline-content">
+          <h4>Caída del Imperio Romano de Occidente</h4>
+          <p>Marca el fin de la Edad Antigua y el comienzo de la Edad Media en Europa.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Caída+de+Roma" alt="Caída de Roma">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">622</div>
+        <div class="timeline-content">
+          <h4>La Hégira</h4>
+          <p>Mahoma emigra de La Meca a Medina, marcando el inicio del calendario islámico.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">800</div>
+        <div class="timeline-content">
+          <h4>Coronación de Carlomagno</h4>
+          <p>Carlomagno es coronado emperador del Sacro Imperio Romano Germánico por el Papa León III.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1066</div>
+        <div class="timeline-content">
+          <h4>Batalla de Hastings</h4>
+          <p>Guillermo el Conquistador derrota al rey Harold II y se convierte en rey de Inglaterra.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Batalla+de+Hastings" alt="Batalla de Hastings">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1096</div>
+        <div class="timeline-content">
+          <h4>Primera Cruzada</h4>
+          <p>Inicio de las expediciones militares promovidas por el papado para recuperar Tierra Santa.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1215</div>
+        <div class="timeline-content">
+          <h4>Firma de la Carta Magna</h4>
+          <p>Documento que limitó el poder de la monarquía inglesa y sentó las bases del constitucionalismo.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1347-1351</div>
+        <div class="timeline-content">
+          <h4>Peste Negra</h4>
+          <p>Pandemia que mató a un tercio de la población europea y cambió la estructura social medieval.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Peste+Negra" alt="Peste Negra">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="medieval">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1453</div>
+        <div class="timeline-content">
+          <h4>Caída de Constantinopla</h4>
+          <p>Los otomanos conquistan Constantinopla, poniendo fin al Imperio Bizantino.</p>
+        </div>
+      </div>
+      
+      <!-- Era de los descubrimientos -->
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1492</div>
+        <div class="timeline-content">
+          <h4>Cristóbal Colón llega a América</h4>
+          <p>El navegante genovés llega al continente americano, iniciando el contacto entre Europa y América.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Colón+en+América" alt="Colón en América">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1517</div>
+        <div class="timeline-content">
+          <h4>Inicio de la Reforma Protestante</h4>
+          <p>Martín Lutero publica sus 95 tesis, desafiando la autoridad de la Iglesia Católica.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1519-1522</div>
+        <div class="timeline-content">
+          <h4>Primera vuelta al mundo</h4>
+          <p>Expedición iniciada por Fernando de Magallanes y completada por Juan Sebastián Elcano.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1687</div>
+        <div class="timeline-content">
+          <h4>Publicación de los Principia de Newton</h4>
+          <p>Isaac Newton establece las leyes del movimiento y la gravitación universal.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Newton" alt="Newton">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1776</div>
+        <div class="timeline-content">
+          <h4>Declaración de Independencia de Estados Unidos</h4>
+          <p>Las trece colonias británicas en América del Norte declaran su independencia.</p>
+        </div>
+      </div>
+      
+      <!-- Era moderna -->
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1789</div>
+        <div class="timeline-content">
+          <h4>Revolución Francesa</h4>
+          <p>Periodo de cambios políticos y sociales radicales en Francia que transformó Europa.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Revolución+Francesa" alt="Revolución Francesa">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="modern">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1804</div>
+        <div class="timeline-content">
+          <h4>Napoleón se corona emperador</h4>
+          <p>Napoleón Bonaparte se corona a sí mismo como emperador de Francia.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1848</div>
+        <div class="timeline-content">
+          <h4>Revoluciones de 1848</h4>
+          <p>Serie de revoluciones políticas en Europa que promovieron ideales democráticos y nacionalistas.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1859</div>
+        <div class="timeline-content">
+          <h4>Publicación de "El origen de las especies"</h4>
+          <p>Charles Darwin publica su teoría de la evolución por selección natural.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Darwin" alt="Darwin">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1869</div>
+        <div class="timeline-content">
+          <h4>Inauguración del Canal de Suez</h4>
+          <p>Se abre el canal que conecta el Mediterráneo con el Mar Rojo, revolucionando el comercio mundial.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1914-1918</div>
+        <div class="timeline-content">
+          <h4>Primera Guerra Mundial</h4>
+          <p>Conflicto bélico global que redefinió las fronteras y el orden político internacional.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Primera+Guerra+Mundial" alt="Primera Guerra Mundial">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1929</div>
+        <div class="timeline-content">
+          <h4>Crack del 29</h4>
+          <p>Colapso del mercado de valores que desencadenó la Gran Depresión.</p>
+        </div>
+      </div>
+      
+      <!-- Era contemporánea -->
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1939-1945</div>
+        <div class="timeline-content">
+          <h4>Segunda Guerra Mundial</h4>
+          <p>El conflicto más mortífero de la historia de la humanidad, con más de 60 millones de víctimas.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Segunda+Guerra+Mundial" alt="Segunda Guerra Mundial">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1945</div>
+        <div class="timeline-content">
+          <h4>Bombas atómicas de Hiroshima y Nagasaki</h4>
+          <p>Estados Unidos lanza las primeras bombas atómicas usadas en guerra, provocando la rendición de Japón.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1947</div>
+        <div class="timeline-content">
+          <h4>Independencia de India y Pakistán</h4>
+          <p>El subcontinente indio se independiza del Imperio Británico y se divide en dos naciones.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1957</div>
+        <div class="timeline-content">
+          <h4>Lanzamiento del Sputnik 1</h4>
+          <p>La Unión Soviética lanza el primer satélite artificial, iniciando la carrera espacial.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Sputnik" alt="Sputnik">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1969</div>
+        <div class="timeline-content">
+          <h4>Llegada del hombre a la Luna</h4>
+          <p>Neil Armstrong se convierte en el primer ser humano en pisar la superficie lunar.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=Llegada+a+la+Luna" alt="Llegada a la Luna">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1989</div>
+        <div class="timeline-content">
+          <h4>Caída del Muro de Berlín</h4>
+          <p>Símbolo del fin de la Guerra Fría y la reunificación de Alemania.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">1991</div>
+        <div class="timeline-content">
+          <h4>Disolución de la Unión Soviética</h4>
+          <p>Fin oficial de la URSS y creación de 15 estados independientes.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2001</div>
+        <div class="timeline-content">
+          <h4>Atentados del 11 de septiembre</h4>
+          <p>Ataques terroristas en Estados Unidos que cambiaron la política internacional.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=11+de+Septiembre" alt="11 de Septiembre">
+          </div>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2008</div>
+        <div class="timeline-content">
+          <h4>Crisis financiera global</h4>
+          <p>Colapso de Lehman Brothers desencadena la peor crisis económica desde la Gran Depresión.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item" data-category="contemporary">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">2020</div>
+        <div class="timeline-content">
+          <h4>Pandemia de COVID-19</h4>
+          <p>Crisis sanitaria global que transformó la sociedad, la economía y la política mundial.</p>
+          <div class="timeline-image">
+            <img src="https://via.placeholder.com/300x150?text=COVID-19" alt="COVID-19">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  <script>
+  // Animación al hacer scroll
+  document.addEventListener('DOMContentLoaded', function() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    
+    function checkIfInView() {
+      timelineItems.forEach(item => {
+        const rect = item.getBoundingClientRect();
+        const isInViewport = (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+        
+        if (isInViewport) {
+          item.classList.add('visible');
+        }
+      });
+    }
+    
+    // Verificar al cargar la página
+    checkIfInView();
+    
+    // Verificar al hacer scroll
+    window.addEventListener('scroll', checkIfInView);
+    
+    // Filtros de la línea de tiempo
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Quitar clase activa de todos los botones
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        
+        // Añadir clase activa al botón clickeado
+        this.classList.add('active');
+        
+        // Obtener el filtro seleccionado
+        const filter = this.getAttribute('data-filter');
+        
+        // Filtrar los elementos de la línea de tiempo
+        timelineItems.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = '';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Expandir imágenes al hacer clic
+    const timelineImages = document.querySelectorAll('.timeline-image img');
+    
+    timelineImages.forEach(img => {
+      img.addEventListener('click', function() {
+        // Crear modal para mostrar la imagen ampliada
+        const modal = document.createElement('div');
+        modal.classList.add('timeline-modal');
+        
+        const modalContent = document.createElement('div');
+        modalContent.classList.add('timeline-modal-content');
+        
+        const modalImg = document.createElement('img');
+        modalImg.src = this.src;
+        
+        const closeBtn = document.createElement('span');
+        closeBtn.classList.add('timeline-modal-close');
+        closeBtn.innerHTML = '&times;';
+        
+        modalContent.appendChild(closeBtn);
+        modalContent.appendChild(modalImg);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Mostrar el modal
+        setTimeout(() => {
+          modal.style.opacity = '1';
+        }, 10);
+        
+        // Cerrar el modal al hacer clic en el botón de cierre o fuera de la imagen
+        closeBtn.addEventListener('click', function() {
+          modal.style.opacity = '0';
+          setTimeout(() => {
+            document.body.removeChild(modal);
+          }, 300);
+        });
+        
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.style.opacity = '0';
+            setTimeout(() => {
+              document.body.removeChild(modal);
+            }, 300);
+          }
+        });
+      });
+    });
+  });
+</script>
+        
+  
+
+  <script>
+    // Animación al hacer scroll
+    document.addEventListener('DOMContentLoaded', function() {
+      const timelineItems = document.querySelectorAll('.timeline-item');
+      
+      function checkIfInView() {
+        timelineItems.forEach(item => {
+          const rect = item.getBoundingClientRect();
+          const isInViewport = (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+          );
+          
+          if (isInViewport) {
+            item.classList.add('visible');
+          }
+        });
+      }
+      
+      // Verificar al cargar la página
+      checkIfInView();
+      
+      // Verificar al hacer scroll
+      window.addEventListener('scroll', checkIfInView);
+    });
+  </script>
+  
+  <footer>
+    <p>&copy; 2025 Atlas Interactivo del Mundo | Todos los derechos reservados</p>
+  </footer>
+  
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializar el mapa circular en la página de inicio
+      if (document.getElementById('world-map')) {
+        console.log('Inicializando mapa mundial');
+        
+        // Inicializar el mapa centrado en [0, 0] con zoom 2
+        const map = L.map('world-map', {
+          center: [20, 0],
+          zoom: 2,
+          minZoom: 2,
+          maxZoom: 6,
+          zoomControl: true,
+          scrollWheelZoom: true,
+          worldCopyJump: true
+        });
+        
+        // Añadir capa de mapa base
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Hacer que el mapa tenga forma circular con CSS
+        document.getElementById('world-map').classList.add('circular-map');
+        
+        // Variable para almacenar el marcador actual
+        let currentMarker = null;
+        
+        // Crear un objeto para almacenar todos los países con sus coordenadas
+        const countries = {};
+        
+        // Recopilar todos los países y sus coordenadas
+        document.querySelectorAll('.countries-list li').forEach(li => {
+          const link = li.querySelector('.country-link');
+          if (link) {
+            const countryName = link.textContent.trim().replace(/^\s*\S+\s+/, ''); // Eliminar el icono
+            const lat = parseFloat(li.getAttribute('data-lat'));
+            const lng = parseFloat(li.getAttribute('data-lng'));
+            
+            if (!isNaN(lat) && !isNaN(lng)) {
+              countries[countryName] = { lat, lng };
+            } else {
+              console.error(`Coordenadas inválidas para ${countryName}: lat=${li.getAttribute('data-lat')}, lng=${li.getAttribute('data-lng')}`);
+            }
+          }
+        });
+        
+        console.log('Países cargados:', Object.keys(countries).length);
+        
+        // Añadir evento de clic a los elementos de la lista de países
+        document.querySelectorAll('.country-link').forEach(link => {
+          link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Obtener el nombre del país (sin el icono)
+            const countryName = this.textContent.trim().replace(/^\s*\S+\s+/, '');
+            
+            // Obtener las coordenadas del país desde nuestro objeto
+            const country = countries[countryName];
+            
+            if (country) {
+              console.log(`Clic en país: ${countryName}, Coordenadas: [${country.lat}, ${country.lng}]`);
+              
+              // Eliminar marcador anterior si existe
+              if (currentMarker) {
+                map.removeLayer(currentMarker);
+              }
+              
+              // Centrar el mapa en las coordenadas del país
+              map.setView([country.lat, country.lng], 4);
+              
+              // Añadir un marcador para mostrar la ubicación
+              currentMarker = L.marker([country.lat, country.lng]).addTo(map);
+              currentMarker.bindPopup(`<b>${countryName}</b>`).openPopup();
+              
+              // Resaltar el elemento de la lista seleccionado
+              document.querySelectorAll('.countries-list li').forEach(item => {
+                item.classList.remove('highlighted');
+              });
+              this.parentElement.classList.add('highlighted');
+            } else {
+              console.error(`No se encontraron coordenadas para: ${countryName}`);
+            }
+          });
+        });
+        
+        // Añadir estilo CSS para resaltar el país seleccionado
+        const style = document.createElement('style');
+        style.textContent = `
+          .countries-list li.highlighted {
+            background-color: rgba(0, 123, 255, 0.2);
+            border-radius: 4px;
+          }
+        `;
+        document.head.appendChild(style);
+      }
+    });
+  </script>
+  <button id="show-all-countries" class="btn btn-primary mb-3">
+    <i class="fas fa-globe"></i> Mostrar todos los países
+  </button>
+
+  <script>
+    document.getElementById('show-all-countries').addEventListener('click', function() {
+      // Limpiar marcador actual
+      if (currentMarker) {
+        map.removeLayer(currentMarker);
+        currentMarker = null;
+      }
+      
+      // Crear un grupo de marcadores
+      const markers = L.markerClusterGroup();
+      
+      // Añadir un marcador para cada país
+      Object.entries(countries).forEach(([name, coords]) => {
+        const marker = L.marker([coords.lat, coords.lng]);
+        marker.bindPopup(`<b>${name}</b>`);
+        markers.addLayer(marker);
+      });
+      
+      // Añadir el grupo de marcadores al mapa
+      map.addLayer(markers);
+      
+      // Ajustar la vista para mostrar todos los marcadores
+      map.fitBounds(markers.getBounds(), { padding: [50, 50] });
+    });
+  </script>
+</body>
+</html>

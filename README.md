@@ -4,7 +4,7 @@ Este es mi proyecto personal creado como parte del curso de desarrollo web. Es u
 
 ## 🌟 Vista Previa
 
-![home](Atlas Interactivo del Mundo/static/img/index.png)
+![home]()
 *Pantalla de inicio con diseño dark y navegación clara.*
 
 ![features](./assets/images/features.png)

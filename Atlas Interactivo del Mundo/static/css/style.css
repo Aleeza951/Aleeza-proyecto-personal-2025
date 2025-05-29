@@ -148,7 +148,7 @@ body {
   border: 5px solid var(--primary-color);
   transition: all 0.3s ease;
 }
-
+   
 #world-map:hover {
   transform: scale(1.02);
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
@@ -202,45 +202,25 @@ body {
     opacity: 0;
   }
 }
-
-/* Estilos responsive */
-@media (max-width: 992px) {
-  .map-countries-container {
-    flex-direction: column;
-    align-items: center;
+     /* Estilos para la línea de tiempo */
+  .world-timeline {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+    margin-top: 50px;
+    border-radius: 10px;
   }
   
-  .countries-container {
-    max-width: 100%;
-    margin-top: 30px;
-  }
-}
-
-@media (max-width: 768px) {
-  #world-map {
-    height: 400px;
-    width: 400px;
+  .world-timeline h3 {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #2c3e50;
   }
   
-  .map-container {
-    flex: 0 0 400px;
+  .world-timeline p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #7f8c8d;
   }
-}
-
-@media (max-width: 480px) {
-  #world-map {
-    height: 300px;
-    width: 300px;
-  }
-  
-  .map-container {
-    flex: 0 0 300px;
-  }
-  
-  .countries-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-}
 
 /* 🔹 SECCIÓN DE CARACTERÍSTICAS */
 .features {
@@ -285,35 +265,6 @@ body {
   color: #666;
 }
 
-
-     /* Estilos para la línea de tiempo */
-  .world-timeline {
-    padding: 40px 20px;
-    background-color: #f8f9fa;
-    margin-top: 50px;
-    border-radius: 10px;
-  }
-  
-  .world-timeline h3 {
-    text-align: center;
-    margin-bottom: 10px;
-    color: #2c3e50;
-  }
-  
-  .world-timeline p {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #7f8c8d;
-  }
-  
-  /* Filtros de la línea de tiempo */
-  .timeline-filters {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 30px;
-  }
-  
   .filter-btn {
     background-color: #f1f1f1;
     border: none;
@@ -333,7 +284,13 @@ body {
     background-color: #3498db;
     color: white;
   }
-  
+    /* Filtros de la línea de tiempo */
+  .timeline-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+  }
   .timeline-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -483,57 +440,44 @@ body {
     font-weight: bold;
     cursor: pointer;
   }
-  /* Responsive */
+
+/* Estilos responsive */
+@media (max-width: 992px) {
+  .map-countries-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .countries-container {
+    max-width: 100%;
+    margin-top: 30px;
+  }
+}
+
+    
+    /* Responsive */
   @media (max-width: 767px) {
     .timeline::before {
       left: 40px;
-    }
-    
-    .timeline-item {
-      width: 100%;
-      padding-left: 70px;
-      padding-right: 20px;
-      left: 0;
-      text-align: left;
-    }
-    
-    .timeline-item:nth-child(odd) .timeline-dot {
-      left: 30px;
-      right: auto;
-    }
-    
-    .timeline-item:nth-child(even) .timeline-dot {
-      left: 30px;
-    }
+   }
+      
+  .timeline-item {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 20px;
+    left: 0;
+    text-align: left;
   }
-    
-    /* Responsive */
-    @media (max-width: 767px) {
-      .timeline::before {
-        left: 40px;
-      }
       
-      .timeline-item {
-        width: 100%;
-        padding-left: 70px;
-        padding-right: 20px;
-        left: 0;
-        text-align: left;
-      }
+  .timeline-item:nth-child(odd) .timeline-dot {
+    left: 30px;
+    right: auto;
+  }
       
-      .timeline-item:nth-child(odd) .timeline-dot {
-        left: 30px;
-        right: auto;
-      }
-      
-      .timeline-item:nth-child(even) .timeline-dot {
-        left: 30px;
-      }
-    }
-
-/* 🔹 RESPONSIVE */
-@media (max-width: 768px) {
-  header h1 {
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 30px;
+  }
+    header h1 {
     font-size: 24px;
   }
   
@@ -562,7 +506,36 @@ body {
   .features {
     gap: 20px;
   }
+  .timeline::before {
+   left: 40px;
+  }
+    
+  .timeline-item {
+    width: 100%;
+    padding-left: 70px;
+    padding-right: 20px;
+    left: 0;
+    text-align: left;
+  }
+    
+  .timeline-item:nth-child(odd) .timeline-dot {
+    left: 30px;
+    right: auto;
+  }
+    
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: 30px;
+  }
+   #world-map {
+    height: 400px;
+    width: 400px;
+  }
+  
+  .map-container {
+    flex: 0 0 400px;
+  }
 }
+
 
 @media (max-width: 480px) {
   body {
@@ -580,6 +553,18 @@ body {
   #world-map {
     height: 250px;
     width: 250px;
+  }
+  
+  .countries-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+   #world-map {
+    height: 300px;
+    width: 300px;
+  }
+  
+  .map-container {
+    flex: 0 0 300px;
   }
   
   .countries-grid {

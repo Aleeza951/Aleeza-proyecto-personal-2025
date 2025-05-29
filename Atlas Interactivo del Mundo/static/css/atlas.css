@@ -25,106 +25,45 @@ body {
   line-height: 1.6;
 }
 
-/* Header styles */
-header {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
+
+@media (max-width: 768px) {
+  .wonders-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  header {
+    padding: 15px;
+  }
 }
 
-header h1 {
-  padding: 20px;
-  font-size: 2rem;
-  text-align: center;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-header h1 i.fas.fa-globe-americas {
-  margin-right: 15px;
-  color: #f39c12;
-  font-size: 2.2rem;
-  animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
+@keyframes slideDown {
   from {
-    transform: rotate(0deg);
+    transform: translateY(-50px);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-nav {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-}
-
-nav ul li {
-  position: relative;
-}
-
-nav ul li a {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  padding: 15px 25px;
-  font-weight: 500;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-nav ul li a i {
-  margin-right: 8px;
-  font-size: 1.1rem;
-}
-
-nav ul li a:before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #f39c12;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-nav ul li a:hover:before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-nav ul li a.active {
-  background-color: #3498db;
-  font-weight: 600;
-}
-
-nav ul li a.active:before {
-  transform: scaleX(1);
+/* Responsive */
+@media (max-width: 480px) {
+  .modal-content {
+    margin: 20% auto;
+    width: 85%;
+    padding: 20px;
+  }
 }
 
 /* Main content */
@@ -139,10 +78,8 @@ main {
   text-align: center;
   margin-bottom: 40px;
   padding: 30px 20px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-  color: white;
+  color: rgb(0, 0, 0);
   border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
 }
 
 .atlas-header h2 {
@@ -190,7 +127,89 @@ main {
   transition: var(--transition);
   outline: none;
 }
+/* Estilos para la barra de búsqueda */
+.country-search {
+  margin-bottom: 15px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
 
+.country-search input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border: 2px solid #ddd;
+  border-radius: 25px 0 0 25px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.country-search input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+  outline: none;
+}
+
+.country-search i.fa-search {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+/* Botón de búsqueda */
+.search-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 0 25px 25px 0;
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button:hover {
+  background-color: var(--secondary-color);
+  transform: scale(1.05);
+}
+
+.search-button i {
+  font-size: 16px;
+}
+
+/* Añadir un indicador de búsqueda activa */
+.search-active .country-search::after {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50%) scale(0.8);
+    opacity: 0.7;
+  }
+}
 #country-search:focus {
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
@@ -604,15 +623,6 @@ main {
   font-weight: bold;
   color: var(--primary-color);
   font-size: 1.2rem;
-}
-
-/* Footer */
-footer {
-  background: rgba(0, 30, 60, 0.9);
-  color: white;
-  text-align: center;
-  padding: 1.5rem;
-  margin-top: 2rem;
 }
 
 /* Responsive styles */

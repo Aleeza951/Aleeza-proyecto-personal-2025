@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
   <style>
-    /* Base styles */
+    /* Estilos base mejorados */
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #e74c3c;
-      --light-color: #ecf0f1;
-      --dark-color: #2c3e50;
+      --primary: #2c3e50;
+      --secondary: #3498db;
+      --accent: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --success: #27ae60;
     }
     
     body {
@@ -22,151 +23,131 @@
       margin: 0;
       padding: 0;
       color: #333;
-      background-color: #f5f5f5;
+      background-color: #f9f9f9;
     }
     
-   /* Apply variables to elements */
-body {
-  background: var(--bg-color);
-  color: var(--text-color);
-}
-
-/* Header styles */
-header {
-  background: linear-gradient(135deg, #2c3e50, #34495e);
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-}
-
-header h1 {
-  padding: 20px;
-  font-size: 2rem;
-  text-align: center;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-header h1 i.fas.fa-globe-americas {
-  margin-right: 15px;
-  color: #f39c12;
-  font-size: 2.2rem;
-  animation: rotate 20s linear infinite;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-nav {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-}
-
-nav ul li {
-  position: relative;
-}
-
-nav ul li a {
-  display: flex;
-  align-items: center;
-  color: white;
-  text-decoration: none;
-  padding: 15px 25px;
-  font-weight: 500;
-  transition: var(--transition);
-  position: relative;
-  overflow: hidden;
-}
-
-nav ul li a i {
-  margin-right: 8px;
-  font-size: 1.1rem;
-}
-
-nav ul li a:before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #f39c12;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.3s ease;
-}
-
-nav ul li a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-nav ul li a:hover:before {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-nav ul li a.active {
-  background-color: #3498db;
-  font-weight: 600;
-}
-
-nav ul li a.active:before {
-  transform: scaleX(1);
-}
-    
     main {
-      padding: 2rem;
-      max-width: 1400px;
-      margin: 0 auto;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
     
     h2 {
-      color: var(--primary-color);
-      border-bottom: 2px solid var(--secondary-color);
+      color: var(--primary);
+      border-bottom: 3px solid var(--secondary);
       padding-bottom: 0.5rem;
+      display: inline-block;
       margin-bottom: 1.5rem;
     }
     
-    /* Controls */
+    /* Nuevo: Breadcrumbs */
+    .breadcrumbs {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .breadcrumbs a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+    
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Controles mejorados */
     .controls {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 1rem;
       margin-bottom: 2rem;
       background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
     
-    .controls input, 
-    .controls select {
-      padding: 0.5rem;
-      border: 1px solid #ddd;
-      border-radius: 4px;
+    .search-container {
+      display: flex;
+      grid-column: 1 / -1;
+    }
+    
+    #explorer-search {
+      flex: 1;
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 6px 0 0 6px;
       font-size: 1rem;
+      transition: border 0.3s;
     }
     
-    /* Visualization container */
+    #explorer-search:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+    
+    #search-button {
+      padding: 0 1.5rem;
+      background: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 0 6px 6px 0;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    #search-button:hover {
+      background: #2980b9;
+    }
+    
+    .controls select {
+      padding: 0.75rem;
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      background: white;
+      cursor: pointer;
+    }
+    
+    .controls select:focus {
+      border-color: var(--secondary);
+      outline: none;
+    }
+    
+    /* Nuevo: Estadísticas rápidas */
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--secondary);
+      margin: 0.5rem 0;
+    }
+    
+    .stat-label {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+    
+    /* Visualizaciones */
     .visualization-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -174,102 +155,168 @@ nav ul li a.active:before {
       margin-bottom: 2rem;
     }
     
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       .visualization-container {
         grid-template-columns: 1fr;
       }
     }
     
-    .map-container, 
-    .timeline-container {
+    .map-container, .timeline-container {
       background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
     
-    #explorers-map {
-      height: 400px;
-      border-radius: 4px;
-    }
-    
-    #exploration-timeline {
-      height: 400px;
-    }
-    
-    /* Explorers list */
-    .explorers-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    
-    .explorer-card {
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    
-    .explorer-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    
-    .explorer-image {
-      height: 200px;
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .explorer-info {
-      padding: 1rem;
-    }
-    
-    .explorer-name {
-      margin: 0;
-      color: var(--primary-color);
-    }
-    
-    .explorer-details {
-      display: flex;
-      justify-content: space-between;
-      margin: 0.5rem 0;
-      color: #666;
-    }
-    
-    .explorer-country {
+    .map-container h3, .timeline-container h3 {
+      margin-top: 0;
+      color: var(--primary);
       display: flex;
       align-items: center;
       gap: 0.5rem;
     }
     
-    .explorer-description {
-      margin: 0.5rem 0;
-      font-size: 0.9rem;
-      line-height: 1.4;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
+    #explorers-map {
+      height: 450px;
+      border-radius: 8px;
+      margin-top: 1rem;
+    }
+    
+    #exploration-timeline {
+      height: 100px;
+      margin-top: 1rem;
+    }
+    
+    /* Tarjetas de exploradores mejoradas */
+    .explorers-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .explorer-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .explorer-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .explorer-image-container {
+      position: relative;
+      height: 220px;
       overflow: hidden;
     }
     
-    .explorer-button {
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      background-color: var(--secondary-color);
+    .explorer-image {
+      width:50%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+    
+    .explorer-card:hover .explorer-image {
+      transform: scale(1.05);
+    }
+    
+    .explorer-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--accent);
       color: white;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.3s;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
     }
     
-    .explorer-button:hover {
-      background-color: #2980b9;
+    .nationality-flag {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px white;
+      object-fit: cover;
     }
     
-    /* Modal */
+    .explorer-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .explorer-info h3 {
+      margin: 0 0 0.5rem 0;
+      color: var(--primary);
+      font-size: 1.25rem;
+    }
+    
+    .meta-info {
+      display: flex;
+      justify-content: space-between;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    
+    .achievements {
+      flex-grow: 1;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    .achievement-tag {
+      display: inline-block;
+      background: #e8f4fc;
+      color: var(--secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .btn-more-info {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+      align-self: flex-start;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+    
+    .btn-more-info:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+    
+    /* Modal mejorado */
     .modal {
       display: none;
       position: fixed;
@@ -279,35 +326,235 @@ nav ul li a.active:before {
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.7);
+      overflow: auto;
+      backdrop-filter: blur(5px);
     }
     
     .modal-content {
       background-color: white;
-      margin: 5% auto;
-      padding: 2rem;
-      border-radius: 8px;
-      width: 80%;
-      max-width: 800px;
-      max-height: 80vh;
-      overflow-y: auto;
+      margin: 3% auto;
+      padding: 2.5rem;
+      border-radius: 12px;
+      width: 85%;
+      max-width: 900px;
       position: relative;
+      animation: modalopen 0.4s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    @keyframes modalopen {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .close-modal {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.5rem;
+      right: 1.5rem;
+      top: 1.5rem;
+      font-size: 1.75rem;
       cursor: pointer;
-      color: #aaa;
+      color: #7f8c8d;
+      transition: color 0.3s;
+      background: none;
+      border: none;
+      padding: 0;
     }
     
     .close-modal:hover {
-      color: var(--accent-color);
+      color: var(--accent);
     }
     
-    /* Responsive adjustments */
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 2.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .modal-image {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .modal-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .modal-header {
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-header h2 {
+      margin: 0;
+      color: var(--primary);
+      border-bottom: none;
+      padding: 0;
+    }
+    
+    .modal-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .meta-box {
+      background: #f5f7fa;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .modal-section {
+      margin-bottom: 2rem;
+    }
+    
+    .modal-section h3 {
+      color: var(--primary);
+      margin-top: 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--secondary);
+    }
+    
+    .route-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .route-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .route-item:last-child {
+      border-bottom: none;
+    }
+    
+    .route-icon {
+      width: 36px;
+      height: 36px;
+      background: var(--secondary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    
+    .route-details {
+      flex-grow: 1;
+    }
+    
+    .route-name {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    
+    .route-coords {
+      font-size: 0.8rem;
+      color: #7f8c8d;
+    }
+    
+    /* Nuevo: Pestañas en el modal */
+    .modal-tabs {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-tab {
+      padding: 0.75rem 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .modal-tab.active {
+      border-bottom-color: var(--secondary);
+      color: var(--secondary);
+    }
+    
+    .modal-tab-content {
+      display: none;
+    }
+    
+    .modal-tab-content.active {
+      display: block;
+    }
+    
+    /* Nuevo: Galería de imágenes */
+    .image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .gallery-image {
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .gallery-image:hover {
+      transform: scale(1.05);
+    }
+    
+    .gallery-image img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+  
+    
+    /* Nuevo: Efectos de carga */
+    .loading {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .loading::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+      animation: loading 1.5s infinite;
+    }
+    
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    /* Nuevo: Adaptaciones para móvil */
     @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: center;
+      }
+      
       .controls {
         grid-template-columns: 1fr;
       }
@@ -315,132 +562,56 @@ nav ul li a.active:before {
       .explorers-container {
         grid-template-columns: 1fr;
       }
-    }
-    
-    /* New additions */
-    .stats-bar {
-      display: flex;
-      justify-content: space-around;
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    .stat-item {
-      text-align: center;
-    }
-    
-    .stat-number {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--secondary-color);
-    }
-    
-    .stat-label {
-      font-size: 0.9rem;
-      color: #666;
-    }
-    
-    .achievements-section {
-      background: white;
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    
-    .achievements-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 1rem;
-    }
-    
-    .achievement-card {
-      background: #f8f9fa;
-      padding: 1rem;
-      border-radius: 4px;
-      border-left: 4px solid var(--secondary-color);
-    }
-    
-    .achievement-title {
-      margin-top: 0;
-      color: var(--primary-color);
-    }
-    
-    .tab-container {
-      margin-bottom: 2rem;
-    }
-    
-    .tab-buttons {
-      display: flex;
-      border-bottom: 1px solid #ddd;
-    }
-    
-    .tab-button {
-      padding: 0.5rem 1rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-    }
-    
-    .tab-button.active {
-      border-bottom-color: var(--secondary-color);
-      color: var(--secondary-color);
-    }
-    
-    .tab-content {
-      display: none;
-      padding: 1rem 0;
-    }
-    
-    .tab-content.active {
-      display: block;
+      
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+      }
+      
+      .modal-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 0.5rem;
+      }
     }
   </style>
-</head>
-<body>
-  <header>
-    <h1><i class="fas fa-globe-americas"></i> Atlas Interactivo del Mundo</h1>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
-        <li><a href="{{ url_for('atlas') }}"><i class="fas fa-map-marked-alt"></i> Atlas</a></li>
-        <li><a href="{{ url_for('wonders') }}"><i class="fas fa-monument"></i> Maravillas</a></li>
-        <li><a href="{{ url_for('explorers') }}"><i class="fas fa-hiking"></i> Exploradores</a></li>
-      </ul>
-    </nav>
-  </header>
+     {% include 'navbar.html' %}
+
   
   <main>
+    <div class="breadcrumbs">
+      <a href="{{ url_for('index') }}">Inicio</a> &raquo; <span>Exploradores</span>
+    </div>
+    
     <h2><i class="fas fa-compass"></i> Grandes Exploradores de la Historia</h2>
     
-    <!-- Statistics Bar -->
-    <div class="stats-bar">
-      <div class="stat-item">
+    <!-- Nuevo: Estadísticas rápidas -->
+    <div class="quick-stats">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
         <div class="stat-number" id="total-explorers">0</div>
         <div class="stat-label">Exploradores</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-globe-europe"></i></div>
         <div class="stat-number" id="total-countries">0</div>
         <div class="stat-label">Países</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-hourglass-start"></i></div>
         <div class="stat-number" id="earliest-century">XV</div>
         <div class="stat-label">Siglo más temprano</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-number" id="longest-journey">0</div>
-        <div class="stat-label">Km más largos recorridos</div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-road"></i></div>
+        <div class="stat-number" id="total-distance">0</div>
+        <div class="stat-label">Km totales recorridos</div>
       </div>
     </div>
     
-    <!-- Controls -->
     <div class="controls">
       <div class="search-container">
-        <input type="text" id="explorer-search" placeholder="Buscar exploradores...">
+        <input type="text" id="explorer-search" placeholder="Buscar por nombre, país o logros...">
         <button id="search-button"><i class="fas fa-search"></i></button>
       </div>
       <select id="country-filter">
@@ -459,95 +630,100 @@ nav ul li a.active:before {
         <option value="name-desc">Nombre (Z-A)</option>
         <option value="year-asc">Año más antiguo</option>
         <option value="year-desc">Año más reciente</option>
+        <option value="distance-desc">Mayor distancia</option>
       </select>
     </div>
     
-    <!-- Tab Container -->
-    <div class="tab-container">
-      <div class="tab-buttons">
-        <button class="tab-button active" data-tab="map-view"><i class="fas fa-map-marked-alt"></i> Vista de Mapa</button>
-        <button class="tab-button" data-tab="timeline-view"><i class="fas fa-timeline"></i> Línea de Tiempo</button>
-        <button class="tab-button" data-tab="achievements-view"><i class="fas fa-trophy"></i> Logros</button>
-      </div>
-      
-      <div class="tab-content active" id="map-view">
-        <div class="visualization-container">
-          <div class="map-container">
-            <h3><i class="fas fa-route"></i> Rutas de Exploración</h3>
-            <div id="explorers-map"></div>
-            <div class="map-legend">
-              <h4>Leyenda:</h4>
-              <div><span class="legend-color" style="background-color: #e74c3c;"></span> Siglo XV</div>
-              <div><span class="legend-color" style="background-color: #3498db;"></span> Siglo XVI</div>
-              <div><span class="legend-color" style="background-color: #2ecc71;"></span> Siglo XVII</div>
-              <div><span class="legend-color" style="background-color: #f39c12;"></span> Siglo XVIII</div>
-              <div><span class="legend-color" style="background-color: #9b59b6;"></span> Siglo XIX</div>
-            </div>
-          </div>
-          <div class="explorer-details-panel" id="explorer-details">
-            <h3>Detalles del Explorador</h3>
-            <div id="selected-explorer-info">
-              <p>Selecciona un explorador en el mapa para ver detalles</p>
-            </div>
-          </div>
+    <div class="visualization-container">
+      <div class="map-container">
+        <h3><i class="fas fa-route"></i> Rutas de Exploración</h3>
+        <div id="explorers-map"></div>
+        <div class="map-legend">
+          <h4><i class="fas fa-key"></i> Leyenda:</h4>
+          <div><span class="legend-color" style="background-color: #e74c3c;"></span> Siglo XV</div>
+          <div><span class="legend-color" style="background-color: #3498db;"></span> Siglo XVI</div>
+          <div><span class="legend-color" style="background-color: #2ecc71;"></span> Siglo XVII</div>
+          <div><span class="legend-color" style="background-color: #f39c12;"></span> Siglo XVIII</div>
+          <div><span class="legend-color" style="background-color: #9b59b6;"></span> Siglo XIX</div>
         </div>
       </div>
-      
-      <div class="tab-content" id="timeline-view">
-        <div class="timeline-container">
-          <h3><i class="fas fa-hourglass-half"></i> Línea de Tiempo de Exploraciones</h3>
-          <div id="exploration-timeline"></div>
+     <div class="timeline-container">
+<div class="timeline-container">
+  <h3><i class="fas fa-book"></i> Historia de la Segunda Guerra Mundial</h3>
+  <div class="ww2-story">
+    <p>
+      La Segunda Guerra Mundial, que duró de 1939 a 1945, fue causada por tensiones políticas y económicas tras la Primera Guerra Mundial.
+      Alemania, liderada por Adolf Hitler, buscaba expandir su territorio y poder, lo que llevó a la invasión de Polonia y el inicio del conflicto.
+    </p>
+    <p>
+      Las Potencias del Eje — Alemania, Italia y Japón — buscaban dominar regiones estratégicas y recursos naturales, mientras que las Potencias Aliadas — Estados Unidos, Reino Unido, la Unión Soviética y otros — luchaban para detener esta agresión.
+    </p>
+    <p>
+      Durante la guerra, se produjeron eventos claves como el Holocausto, donde millones de judíos y otros grupos fueron perseguidos y asesinados,
+      y batallas decisivas como Stalingrado y Normandía que cambiaron el curso del conflicto.
+    </p>
+    <p>
+      La guerra terminó con la rendición de Alemania en mayo de 1945 y la de Japón en septiembre tras el lanzamiento de bombas atómicas en Hiroshima y Nagasaki por parte de Estados Unidos.
+      Este conflicto causó la muerte de más de 60 millones de personas y llevó a la creación de las Naciones Unidas para promover la paz mundial.
+    </p>
+    <p>
+      Las consecuencias de la guerra incluyeron la división de Europa en bloques ideológicos, el inicio de la Guerra Fría, y grandes avances tecnológicos y sociales.
+    </p>
+  </div>
+  <div class="timeline-notes">
+    <p><small>Resumen detallado de la Segunda Guerra Mundial.</small></p>
+  </div>
+</div>
+     </div>
+
+    
+    <!-- Nuevo: Sección de logros destacados -->
+    <div class="achievements-section">
+      <h3><i class="fas fa-trophy"></i> Logros Destacados</h3>
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-ship"></i></div>
+          <h4>Primera Circunnavegación</h4>
+          <p>Magallanes y Elcano completaron la primera vuelta al mundo (1519-1522).</p>
         </div>
-      </div>
-      
-      <div class="tab-content" id="achievements-view">
-        <div class="achievements-section">
-          <h3><i class="fas fa-trophy"></i> Logros Históricos</h3>
-          <div class="achievements-grid">
-            <div class="achievement-card">
-              <h4 class="achievement-title">Primera circunnavegación</h4>
-              <p>Magallanes y Elcano completaron la primera vuelta al mundo (1519-1522).</p>
-            </div>
-            <div class="achievement-card">
-              <h4 class="achievement-title">Descubrimiento de América</h4>
-              <p>Cristóbal Colón llegó al continente americano en 1492.</p>
-            </div>
-            <div class="achievement-card">
-              <h4 class="achievement-title">Polo Norte</h4>
-              <p>Robert Peary fue el primero en llegar al Polo Norte en 1909.</p>
-            </div>
-            <div class="achievement-card">
-              <h4 class="achievement-title">Polo Sur</h4>
-              <p>Roald Amundsen alcanzó el Polo Sur en 1911.</p>
-            </div>
-          </div>
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-globe-americas"></i></div>
+          <h4>Descubrimiento de América</h4>
+          <p>Cristóbal Colón llegó al continente americano en 1492.</p>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon"><i class="fas fa-mountain"></i></div>
+          <h4>Conquista del Polo Sur</h4>
+          <p>Roald Amundsen alcanzó el Polo Sur en 1911.</p>
         </div>
       </div>
     </div>
     
-    <!-- Explorers List -->
+    <h3><i class="fas fa-users"></i> Catálogo de Exploradores</h3>
     <div class="explorers-container" id="explorers-list">
       <!-- Contenido generado dinámicamente -->
     </div>
-  </main>
+
   
-  <!-- Explorer Modal -->
+  <!-- Modal de explorador -->
   <div id="explorer-modal" class="modal">
     <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <div id="modal-content"></div>
+      <button class="close-modal">&times;</button>
+      <div id="modal-content">
+        <!-- Contenido generado dinámicamente -->
+      </div>
     </div>
   </div>
-  
-  <footer>
-    <p>&copy; 2025 Atlas Interactivo del Mundo | <a href="#" id="about-link">Acerca de</a></p>
-  </footer>
+    </div>
+  </main>
+       {% include 'footer.html' %}
+
 
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Sample data for explorers
+      // Datos de ejemplo mejorados
       const explorersData = [
         {
           id: 1,
@@ -556,21 +732,27 @@ nav ul li a.active:before {
           birthYear: 1451,
           deathYear: 1506,
           century: 15,
-          description: "Navegante genovés al servicio de la Corona de Castilla, famoso por haber descubierto América en 1492.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Christopher_Columbus.PNG/220px-Christopher_Columbus.PNG",
+          description: "Navegante genovés al servicio de la Corona de Castilla, famoso por haber descubierto América en 1492. Sus viajes marcaron el inicio de la exploración y colonización europea del continente americano.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Christopher_Columbus.PNG/800px-Christopher_Columbus.PNG",
           routes: [
-            {lat: 37.2233, lng: -6.0329, name: "Palos de la Frontera"},
-            {lat: 28.2916, lng: -16.6291, name: "Islas Canarias"},
-            {lat: 25.7370, lng: -80.2378, name: "Bahamas"},
-            {lat: 19.8968, lng: -75.1221, name: "Cuba"},
-            {lat: 18.7357, lng: -70.1627, name: "La Española"}
+            {lat: 37.2233, lng: -6.0329, name: "Palos de la Frontera", year: 1492, description: "Punto de partida del primer viaje"},
+            {lat: 28.2916, lng: -16.6291, name: "Islas Canarias", year: 1492, description: "Última escala antes de cruzar el Atlántico"},
+            {lat: 25.7370, lng: -80.2378, name: "Bahamas", year: 1492, description: "Primer avistamiento de tierra el 12 de octubre"},
+            {lat: 19.8968, lng: -75.1221, name: "Cuba", year: 1492, description: "Exploración de la costa norte"},
+            {lat: 18.7357, lng: -70.1627, name: "La Española", year: 1492, description: "Establecimiento del fuerte Navidad"}
           ],
           achievements: [
             "Descubrimiento de América en 1492",
             "Cuatro viajes al Nuevo Mundo",
-            "Establecimiento de primeras colonias europeas en América"
+            "Establecimiento de las primeras colonias europeas en América",
+            "Apertura de rutas transatlánticas permanentes"
           ],
-          distance: 8000
+          distance: 8000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Portrait_of_a_Man%2C_Said_to_be_Christopher_Columbus.jpg/320px-Portrait_of_a_Man%2C_Said_to_be_Christopher_Columbus.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Columbus_Taking_Possession.jpg/320px-Columbus_Taking_Possession.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Columbus1.PNG/320px-Columbus1.PNG"
+          ]
         },
         {
           id: 2,
@@ -579,21 +761,27 @@ nav ul li a.active:before {
           birthYear: 1480,
           deathYear: 1521,
           century: 16,
-          description: "Explorador portugués que organizó la primera circunnavegación de la Tierra, aunque murió antes de completarla.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ferdinand_Magellan.jpg/220px-Ferdinand_Magellan.jpg",
+          description: "Explorador portugués que organizó la primera circunnavegación de la Tierra, aunque murió antes de completarla. Su expedición demostró la esfericidad de la Tierra y la existencia de un paso marítimo al sur de América.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ferdinand_Magellan.jpg/800px-Ferdinand_Magellan.jpg",
           routes: [
-            {lat: 38.7071, lng: -9.1355, name: "Lisboa"},
-            {lat: -34.6037, lng: -58.3816, name: "Río de la Plata"},
-            {lat: -53.1638, lng: -70.9171, name: "Estrecho de Magallanes"},
-            {lat: 10.7202, lng: 122.5621, name: "Filipinas"},
-            {lat: 9.8186, lng: 118.7460, name: "Isla de Mactán"}
+            {lat: 38.7071, lng: -9.1355, name: "Lisboa", year: 1519, description: "Partida de la expedición"},
+            {lat: -34.6037, lng: -58.3816, name: "Río de la Plata", year: 1520, description: "Exploración del estuario"},
+            {lat: -53.1638, lng: -70.9171, name: "Estrecho de Magallanes", year: 1520, description: "Descubrimiento del paso al Pacífico"},
+            {lat: 10.7202, lng: 122.5621, name: "Filipinas", year: 1521, description: "Llegada a Asia"},
+            {lat: 9.8186, lng: 118.7460, name: "Isla de Mactán", year: 1521, description: "Muerte de Magallanes"}
           ],
           achievements: [
             "Primera circunnavegación del globo (completada por Elcano)",
             "Descubrimiento del Estrecho de Magallanes",
-            "Primer europeo en navegar desde el Atlántico al Pacífico"
+            "Primer europeo en navegar desde el Atlántico al Pacífico",
+            "Demostración práctica de la esfericidad de la Tierra"
           ],
-          distance: 42000
+          distance: 42000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Magellan_Elcano_Circumnavigation-es.svg/320px-Magellan_Elcano_Circumnavigation-es.svg.png",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Strait_of_magellan.jpg/320px-Strait_of_magellan.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/The_Magellan_exploration.jpg/320px-The_Magellan_exploration.jpg"
+          ]
         },
         {
           id: 3,
@@ -602,21 +790,27 @@ nav ul li a.active:before {
           birthYear: 1728,
           deathYear: 1779,
           century: 18,
-          description: "Navegante, explorador y cartógrafo británico que realizó tres viajes por el océano Pacífico.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Captainjamescookportrait.jpg/220px-Captainjamescookportrait.jpg",
+          description: "Navegante, explorador y cartógrafo británico que realizó tres viajes por el océano Pacífico. Mapeó con precisión grandes áreas y realizó el primer contacto europeo registrado con la costa este de Australia y las islas Hawái.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Captainjamescookportrait.jpg/800px-Captainjamescookportrait.jpg",
           routes: [
-            {lat: 50.7184, lng: -1.8832, name: "Plymouth"},
-            {lat: -17.6797, lng: 149.4068, name: "Tahití"},
-            {lat: -40.9006, lng: 174.8860, name: "Nueva Zelanda"},
-            {lat: -33.8688, lng: 151.2093, name: "Sídney"},
-            {lat: 21.3114, lng: -157.7964, name: "Hawái"}
+            {lat: 50.7184, lng: -1.8832, name: "Plymouth", year: 1768, description: "Partida del primer viaje"},
+            {lat: -17.6797, lng: 149.4068, name: "Tahití", year: 1769, description: "Observación del tránsito de Venus"},
+            {lat: -40.9006, lng: 174.8860, name: "Nueva Zelanda", year: 1769, description: "Cartografía detallada"},
+            {lat: -33.8688, lng: 151.2093, name: "Sídney", year: 1770, description: "Primer contacto con Australia oriental"},
+            {lat: 21.3114, lng: -157.7964, name: "Hawái", year: 1779, description: "Muerte de Cook"}
           ],
           achievements: [
             "Cartografía de Nueva Zelanda y la Gran Barrera de Coral",
             "Primer contacto europeo con la costa este de Australia",
-            "Exploración del Pacífico Sur"
+            "Exploración del Pacífico Sur",
+            "Búsqueda del continente austral"
           ],
-          distance: 240000
+          distance: 240000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Cook_Three_Voyages_58.png/320px-Cook_Three_Voyages_58.png",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Cooks_First_Voyage_1768_1771.jpg/320px-Cooks_First_Voyage_1768_1771.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Death_of_Cook.jpg/320px-Death_of_Cook.jpg"
+          ]
         },
         {
           id: 4,
@@ -625,21 +819,27 @@ nav ul li a.active:before {
           birthYear: 1254,
           deathYear: 1324,
           century: 13,
-          description: "Comerciante y explorador veneciano que viajó por Asia siguiendo la Ruta de la Seda.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Marco_Polo_-_Costume_Tartare.jpg/220px-Marco_Polo_-_Costume_Tartare.jpg",
+          description: "Comerciante y explorador veneciano que viajó por Asia siguiendo la Ruta de la Seda. Sus relatos introdujeron a los europeos en las riquezas y culturas de China y otras regiones asiáticas.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Marco_Polo_-_Costume_Tartare.jpg/800px-Marco_Polo_-_Costume_Tartare.jpg",
           routes: [
-            {lat: 45.4408, lng: 12.3155, name: "Venecia"},
-            {lat: 39.9042, lng: 116.4074, name: "Pekín"},
-            {lat: 24.8801, lng: 102.8329, name: "Yunnan"},
-            {lat: 34.3416, lng: 108.9398, name: "Xi'an"},
-            {lat: 31.2304, lng: 121.4737, name: "Shanghái"}
+            {lat: 45.4408, lng: 12.3155, name: "Venecia", year: 1271, description: "Inicio del viaje"},
+            {lat: 39.9042, lng: 116.4074, name: "Pekín", year: 1275, description: "Llegada a la corte de Kublai Khan"},
+            {lat: 24.8801, lng: 102.8329, name: "Yunnan", year: 1280, description: "Exploración del suroeste de China"},
+            {lat: 34.3416, lng: 108.9398, name: "Xi'an", year: 1282, description: "Visita a la antigua capital china"},
+            {lat: 31.2304, lng: 121.4737, name: "Shanghái", year: 1285, description: "Exploración de la costa este"}
           ],
           achievements: [
             "Uno de los primeros europeos en viajar a China",
             "Introdujo a Europa el conocimiento de Asia Central y China",
-            "Su libro inspiró a generaciones de exploradores"
+            "Su libro 'Los viajes de Marco Polo' inspiró a generaciones de exploradores",
+            "Sirvió como embajador de Kublai Khan"
           ],
-          distance: 24000
+          distance: 24000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Marco_Polo_-_scene_at_the_court_of_Kublai_Khan.jpg/320px-Marco_Polo_-_scene_at_the_court_of_Kublai_Khan.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Marco_Polo_portrait.jpg/320px-Marco_Polo_portrait.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Il_milione.jpg/320px-Il_milione.jpg"
+          ]
         },
         {
           id: 5,
@@ -648,30 +848,69 @@ nav ul li a.active:before {
           birthYear: 1872,
           deathYear: 1928,
           century: 19,
-          description: "Explorador polar noruego que dirigió la primera expedición al Polo Sur en 1911.",
-          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Roald_Amundsen_crop.jpg/220px-Roald_Amundsen_crop.jpg",
+          description: "Explorador polar noruego que dirigió la primera expedición al Polo Sur en 1911. También fue el primero en navegar por el Paso del Noroeste y participó en expediciones aéreas al Ártico.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Roald_Amundsen_crop.jpg/800px-Roald_Amundsen_crop.jpg",
           routes: [
-            {lat: 59.9139, lng: 10.7522, name: "Oslo"},
-            {lat: -77.8463, lng: 166.6683, name: "Isla de Ross"},
-            {lat: -90, lng: 0, name: "Polo Sur"},
-            {lat: 78.2232, lng: 15.6267, name: "Svalbard"}
+            {lat: 59.9139, lng: 10.7522, name: "Oslo", year: 1910, description: "Partida de la expedición antártica"},
+            {lat: -77.8463, lng: 166.6683, name: "Isla de Ross", year: 1911, description: "Base de operaciones en la Antártida"},
+            {lat: -90, lng: 0, name: "Polo Sur", year: 1911, description: "Llegada al Polo el 14 de diciembre"},
+            {lat: 78.2232, lng: 15.6267, name: "Svalbard", year: 1926, description: "Expedición en dirigible al Polo Norte"}
           ],
           achievements: [
             "Primera expedición al Polo Sur (1911)",
-            "Primer paso del Noroeste (1903-1906)",
-            "Primer sobrevuelo del Ártico"
+            "Primer paso completo del Noroeste (1903-1906)",
+            "Primer sobrevuelo del Ártico en dirigible (1926)",
+            "Exploraciones pioneras en ambos polos"
           ],
-          distance: 3000
+          distance: 3000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Amundsen_expedition_members_at_the_South_Pole%2C_1911.jpg/320px-Amundsen_expedition_members_at_the_South_Pole%2C_1911.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Roald_Amundsen.jpg/320px-Roald_Amundsen.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Fram_Amundsen.jpg/320px-Fram_Amundsen.jpg"
+          ]
+        },
+        {
+          id: 6,
+          name: "Hernán Cortés",
+          country: "Spain",
+          birthYear: 1485,
+          deathYear: 1547,
+          century: 16,
+          description: "Conquistador español que lideró la expedición que causó la caída del Imperio azteca y la conquista de México para la Corona de Castilla.",
+          image: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Hernan_Cortes.png/800px-Hernan_Cortes.png",
+          routes: [
+            {lat: 37.3826, lng: -5.9963, name: "Sevilla", year: 1504, description: "Partida hacia América"},
+            {lat: 19.4326, lng: -99.1332, name: "Tenochtitlán", year: 1519, description: "Conquista del Imperio Azteca"},
+            {lat: 16.8531, lng: -99.8237, name: "Acapulco", year: 1530, description: "Exploración de la costa del Pacífico"},
+            {lat: 19.0414, lng: -98.2063, name: "Puebla", year: 1531, description: "Fundación de la ciudad"}
+          ],
+          achievements: [
+            "Conquista del Imperio Azteca",
+            "Fundación de la Nueva España",
+            "Exploración de la península de Baja California",
+            "Introducción del caballo en América continental"
+          ],
+          distance: 5000,
+          gallery: [
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Cortes-Hernan-LOC.jpg/320px-Cortes-Hernan-LOC.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Conquista-de-Mexico-por-Cortes-Hernan.jpg/320px-Conquista-de-Mexico-por-Cortes-Hernan.jpg",
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Meeting_of_Cortes_and_Montezuma_-_Project_Gutenberg_eText_14961.jpg/320px-Meeting_of_Cortes_and_Montezuma_-_Project_Gutenberg_eText_14961.jpg"
+          ]
         }
       ];
 
-      // Initialize map
+      // Variables para paginación
+      let currentPage = 1;
+      const explorersPerPage = 6;
+      let filteredExplorers = [...explorersData];
+
+      // Inicializar el mapa
       const map = L.map('explorers-map').setView([20, 0], 2);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(map);
 
-      // Add route polylines to map
+      // Colores por siglo
       const centuryColors = {
         13: '#8e44ad',
         15: '#e74c3c',
@@ -681,40 +920,42 @@ nav ul li a.active:before {
         19: '#9b59b6'
       };
 
+      // Añadir rutas al mapa
       explorersData.forEach(explorer => {
         if (explorer.routes && explorer.routes.length > 1) {
           const routeCoordinates = explorer.routes.map(route => [route.lat, route.lng]);
           const polyline = L.polyline(routeCoordinates, {
             color: centuryColors[explorer.century] || '#000',
             weight: 3,
-            opacity: 0.7
+            opacity: 0.8
           }).addTo(map);
           
-          // Add markers for start and end points
+          // Marcador de inicio
           L.marker([explorer.routes[0].lat, explorer.routes[0].lng], {
             icon: L.divIcon({
               className: 'start-marker',
               html: `<i class="fas fa-ship" style="color: ${centuryColors[explorer.century] || '#000'}"></i>`,
-              iconSize: [20, 20]
+              iconSize: [24, 24]
             })
-          }).addTo(map).bindPopup(`<b>${explorer.name}</b><br>Inicio del viaje`);
+          }).addTo(map).bindPopup(`<b>${explorer.name}</b><br>Inicio del viaje (${explorer.routes[0].year})`);
           
+          // Marcador de fin
           L.marker([explorer.routes[explorer.routes.length-1].lat, explorer.routes[explorer.routes.length-1].lng], {
             icon: L.divIcon({
               className: 'end-marker',
               html: `<i class="fas fa-flag-checkered" style="color: ${centuryColors[explorer.century] || '#000'}"></i>`,
-              iconSize: [20, 20]
+              iconSize: [24, 24]
             })
-          }).addTo(map).bindPopup(`<b>${explorer.name}</b><br>Fin del viaje`);
+          }).addTo(map).bindPopup(`<b>${explorer.name}</b><br>Fin del viaje (${explorer.routes[explorer.routes.length-1].year})`);
           
-          // Bind click event to show explorer info
+          // Evento click en la ruta
           polyline.on('click', function() {
             showExplorerDetails(explorer);
           });
         }
       });
 
-      // Populate country filter
+      // Llenar filtro de países
       const countries = [...new Set(explorersData.map(explorer => explorer.country))];
       const countryFilter = document.getElementById('country-filter');
       countries.forEach(country => {
@@ -724,116 +965,175 @@ nav ul li a.active:before {
         countryFilter.appendChild(option);
       });
 
-      // Render explorers list
-      function renderExplorersList(explorers) {
+      // Renderizar lista de exploradores
+      function renderExplorersList(explorers, page = 1) {
         const container = document.getElementById('explorers-list');
         container.innerHTML = '';
         
-        explorers.forEach(explorer => {
+        const startIndex = (page - 1) * explorersPerPage;
+        const endIndex = startIndex + explorersPerPage;
+        const paginatedExplorers = explorers.slice(startIndex, endIndex);
+        
+        if (paginatedExplorers.length === 0) {
+          container.innerHTML = '<p class="no-results">No se encontraron exploradores con estos criterios.</p>';
+          return;
+        }
+        
+        paginatedExplorers.forEach(explorer => {
           const card = document.createElement('div');
           card.className = 'explorer-card';
           card.innerHTML = `
-            <div class="explorer-image" style="background-image: url('${explorer.image}')"></div>
+            <div class="explorer-image-container">
+              <img src="${explorer.image}" alt="${explorer.name}" class="explorer-image">
+              <span class="explorer-badge">Siglo ${explorer.century}</span>
+              <img src="https://flagcdn.com/w40/${explorer.country.toLowerCase().replace(' ', '-')}.png" 
+                   class="nationality-flag" 
+                   alt="${explorer.country}">
+            </div>
             <div class="explorer-info">
-              <h3 class="explorer-name">${explorer.name}</h3>
-              <div class="explorer-details">
-                <span class="explorer-century">Siglo ${explorer.century}</span>
-                <span class="explorer-country">
-                  <span class="fi fi-${explorer.country.toLowerCase().replace(' ', '-')}"></span>
-                  ${explorer.country}
-                </span>
+              <h3>${explorer.name}</h3>
+              <div class="meta-info">
+                <span class="meta-item"><i class="fas fa-calendar"></i> ${explorer.birthYear}-${explorer.deathYear}</span>
+                <span class="meta-item"><i class="fas fa-flag"></i> ${explorer.country}</span>
               </div>
-              <p class="explorer-description">${explorer.description}</p>
-              <button class="explorer-button" data-id="${explorer.id}">Ver detalles</button>
+              <p class="achievements">
+                ${explorer.achievements.slice(0, 2).map(ach => `<span class="achievement-tag">${ach}</span>`).join('')}
+              </p>
+              <button class="btn-more-info" data-id="${explorer.id}">
+                <i class="fas fa-info-circle"></i> Más información
+              </button>
             </div>
           `;
           container.appendChild(card);
           
-          // Add click event to button
-          card.querySelector('.explorer-button').addEventListener('click', function() {
+          // Evento click para el modal
+          card.querySelector('.btn-more-info').addEventListener('click', function() {
             showExplorerModal(explorer);
           });
         });
+        
+        // Actualizar controles de paginación
+        updatePaginationControls(explorers.length);
       }
 
-      // Show explorer details in modal
-      function showExplorerModal(explorer) {
-        const modal = document.getElementById('explorer-modal');
-        const modalContent = document.getElementById('modal-content');
+   function showExplorerModal(explorer) {
+  const modal = document.getElementById('explorer-modal');
+  if (!modal) {
+    console.error('Modal element not found!');
+    return;
+  }
+  
+  const modalContent = document.getElementById('modal-content');
+  if (!modalContent) {
+    console.error('Modal content element not found!');
+    return;
+  }
+  
+  // Generate modal content (your existing code)
+  
+  // Show the modal
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  
+  // Close modal handlers
+  const closeBtn = modal.querySelector('.close-modal');
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    };
+  }
+  
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  };
         
-        modalContent.innerHTML = `
-          <div class="modal-header">
-            <h2>${explorer.name}</h2>
-            <div class="explorer-meta">
-              <span class="explorer-country">
-                <span class="fi fi-${explorer.country.toLowerCase().replace(' ', '-')}"></span>
-                ${explorer.country}
-              </span>
-              <span class="explorer-years">${explorer.birthYear} - ${explorer.deathYear}</span>
-              <span class="explorer-century">Siglo ${explorer.century}</span>
-            </div>
-          </div>
-          <div class="modal-body">
-            <div class="explorer-image" style="background-image: url('${explorer.image}')"></div>
-            <div class="explorer-bio">
-              <h3>Biografía</h3>
-              <p>${explorer.description}</p>
-              
-              <h3>Logros Principales</h3>
-              <ul>
-                ${explorer.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
-              </ul>
-              
-              <h3>Ruta de Exploración</h3>
-              <div class="route-stops">
-                ${explorer.routes.map(route => `
-                  <div class="route-stop">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>${route.name}</span>
-                  </div>
-                `).join('')}
-              </div>
-            </div>
-          </div>
-        `;
-        
+        // Mostrar modal
         modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
         
-        // Close modal when clicking X
-        document.querySelector('.close-modal').addEventListener('click', function() {
-          modal.style.display = 'none';
-        });
+        // Configurar pestañas del modal
+        setupModalTabs();
         
-        // Close modal when clicking outside
+        // Configurar galería de imágenes
+        setupImageGallery();
+        
+        // Cerrar modal
+        document.querySelector('.close-modal').addEventListener('click', closeModal);
         window.addEventListener('click', function(event) {
           if (event.target == modal) {
-            modal.style.display = 'none';
+            closeModal();
           }
         });
       }
 
-      // Show explorer details in side panel
+      // Configurar pestañas del modal
+      function setupModalTabs() {
+        const tabs = document.querySelectorAll('.modal-tab');
+        const tabContents = document.querySelectorAll('.modal-tab-content');
+        
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            
+            // Actualizar pestaña activa
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Actualizar contenido activo
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+          });
+        });
+      }
+
+      // Configurar galería de imágenes
+      function setupImageGallery() {
+        const galleryImages = document.querySelectorAll('.gallery-image');
+        if (galleryImages.length > 0) {
+          galleryImages.forEach(image => {
+            image.addEventListener('click', function() {
+              const imgSrc = this.querySelector('img').src;
+              window.open(imgSrc, '_blank');
+            });
+          });
+        }
+      }
+
+      // Cerrar modal
+      function closeModal() {
+        const modal = document.getElementById('explorer-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+
+      // Mostrar detalles en el panel lateral
       function showExplorerDetails(explorer) {
-        const panel = document.getElementById('selected-explorer-info');
+        const panel = document.getElementById('explorer-details');
         panel.innerHTML = `
           <h4>${explorer.name}</h4>
           <div class="explorer-meta">
             <span class="explorer-country">
-              <span class="fi fi-${explorer.country.toLowerCase().replace(' ', '-')}"></span>
+              <img src="https://flagcdn.com/w20/${explorer.country.toLowerCase().replace(' ', '-')}.png" alt="${explorer.country}">
               ${explorer.country}
             </span>
-            <span class="explorer-years">${explorer.birthYear} - ${explorer.deathYear}</span>
+            <span class="explorer-years">${explorer.birthYear}-${explorer.deathYear}</span>
           </div>
-          <p>${explorer.description}</p>
-          <button class="explorer-button" data-id="${explorer.id}">Ver más detalles</button>
+          <p>${explorer.description.substring(0, 150)}...</p>
+          <button class="btn-more-info" data-id="${explorer.id}">
+            <i class="fas fa-info-circle"></i> Ver más detalles
+          </button>
         `;
         
-        panel.querySelector('.explorer-button').addEventListener('click', function() {
+        panel.querySelector('.btn-more-info').addEventListener('click', function() {
           showExplorerModal(explorer);
         });
       }
 
-      // Initialize timeline chart
+      // Inicializar timeline
       function initTimeline() {
         const timelineData = explorersData.map(explorer => ({
           x: explorer.name,
@@ -850,12 +1150,16 @@ nav ul li a.active:before {
           }],
           chart: {
             height: 350,
-            type: 'rangeBar'
+            type: 'rangeBar',
+            toolbar: {
+              show: false
+            }
           },
           plotOptions: {
             bar: {
               horizontal: true,
               distributed: true,
+              barHeight: '60%',
               dataLabels: {
                 hideOverflowingLabels: false
               }
@@ -896,10 +1200,17 @@ nav ul li a.active:before {
                 <div class="timeline-tooltip">
                   <h3>${explorer.name}</h3>
                   <p><strong>País:</strong> ${explorer.country}</p>
-                  <p><strong>Siglo:</strong> ${explorer.centity}</p>
-                  <p>${explorer.description}</p>
+                  <p><strong>Siglo:</strong> ${explorer.century}</p>
+                  <p>${explorer.description.substring(0, 120)}...</p>
                 </div>
               `;
+            }
+          },
+          events: {
+            dataPointSelection: function(event, chartContext, config) {
+              const explorerName = config.w.globals.labels[config.dataPointIndex];
+              const explorer = explorersData.find(e => e.name === explorerName);
+              showExplorerModal(explorer);
             }
           }
         });
@@ -907,7 +1218,7 @@ nav ul li a.active:before {
         timelineChart.render();
       }
 
-      // Initialize statistics
+      // Inicializar estadísticas
       function initStatistics() {
         document.getElementById('total-explorers').textContent = explorersData.length;
         document.getElementById('total-countries').textContent = countries.length;
@@ -916,11 +1227,11 @@ nav ul li a.active:before {
         const earliestCentury = Math.min(...centuries);
         document.getElementById('earliest-century').textContent = getCenturyName(earliestCentury);
         
-        const longestDistance = Math.max(...explorersData.map(e => e.distance || 0));
-        document.getElementById('longest-journey').textContent = longestDistance.toLocaleString() + ' km';
+        const totalDistance = explorersData.reduce((sum, e) => sum + (e.distance || 0), 0);
+        document.getElementById('total-distance').textContent = Math.round(totalDistance / 1000).toLocaleString();
       }
 
-      // Helper function to get century name
+      // Función para obtener nombre del siglo
       function getCenturyName(century) {
         const centuryNames = {
           13: 'XIII',
@@ -933,72 +1244,74 @@ nav ul li a.active:before {
         return centuryNames[century] || century;
       }
 
-      // Tab functionality
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
-      
-      tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          const tabId = this.getAttribute('data-tab');
-          
-          // Update active tab button
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          
-          // Update active tab content
-          tabContents.forEach(content => content.classList.remove('active'));
-          document.getElementById(tabId).classList.add('active');
-          
-          // If timeline tab is activated, initialize the chart
-          if (tabId === 'timeline-view') {
-            initTimeline();
-          }
-        });
+      // Actualizar controles de paginación
+      function updatePaginationControls(totalExplorers) {
+        const totalPages = Math.ceil(totalExplorers / explorersPerPage);
+        document.getElementById('page-info').textContent = `Página ${currentPage} de ${totalPages}`;
+        
+        document.getElementById('prev-page').disabled = currentPage === 1;
+        document.getElementById('next-page').disabled = currentPage === totalPages || totalPages === 0;
+      }
+
+      // Eventos de paginación
+      document.getElementById('prev-page').addEventListener('click', function() {
+        if (currentPage > 1) {
+          currentPage--;
+          renderExplorersList(filteredExplorers, currentPage);
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        }
       });
 
-      // Search functionality
+      document.getElementById('next-page').addEventListener('click', function() {
+        const totalPages = Math.ceil(filteredExplorers.length / explorersPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderExplorersList(filteredExplorers, currentPage);
+          window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+      });
+
+      // Función de búsqueda
       document.getElementById('search-button').addEventListener('click', function() {
-        const searchTerm = document.getElementById('explorer-search').value.toLowerCase();
-        const filteredExplorers = explorersData.filter(explorer => 
-          explorer.name.toLowerCase().includes(searchTerm) ||
-          explorer.country.toLowerCase().includes(searchTerm) ||
-          explorer.description.toLowerCase().includes(searchTerm)
-        );
-        renderExplorersList(filteredExplorers);
-      });
-
-      // Filter functionality
-      document.getElementById('country-filter').addEventListener('change', function() {
         applyFilters();
       });
 
-      document.getElementById('century-filter').addEventListener('change', function() {
-        applyFilters();
+      // Búsqueda al presionar Enter
+      document.getElementById('explorer-search').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          applyFilters();
+        }
       });
 
-      document.getElementById('sort-explorers').addEventListener('change', function() {
-        applyFilters();
-      });
-
-      // Apply all filters and sorting
+      // Aplicar filtros
       function applyFilters() {
+        const searchTerm = document.getElementById('explorer-search').value.toLowerCase();
         const countryFilter = document.getElementById('country-filter').value;
         const centuryFilter = document.getElementById('century-filter').value;
         const sortOption = document.getElementById('sort-explorers').value;
         
-        let filteredExplorers = [...explorersData];
+        filteredExplorers = [...explorersData];
         
-        // Apply country filter
+        // Aplicar filtro de búsqueda
+        if (searchTerm) {
+          filteredExplorers = filteredExplorers.filter(explorer => 
+            explorer.name.toLowerCase().includes(searchTerm) ||
+            explorer.country.toLowerCase().includes(searchTerm) ||
+            explorer.description.toLowerCase().includes(searchTerm) ||
+            explorer.achievements.some(ach => ach.toLowerCase().includes(searchTerm))
+          )}
+
+        // Aplicar filtro de país
         if (countryFilter !== 'all') {
           filteredExplorers = filteredExplorers.filter(explorer => explorer.country === countryFilter);
         }
         
-        // Apply century filter
+        // Aplicar filtro de siglo
         if (centuryFilter !== 'all') {
           filteredExplorers = filteredExplorers.filter(explorer => explorer.century.toString() === centuryFilter);
         }
         
-        // Apply sorting
+        // Aplicar ordenación
         switch (sortOption) {
           case 'name-asc':
             filteredExplorers.sort((a, b) => a.name.localeCompare(b.name));
@@ -1012,21 +1325,393 @@ nav ul li a.active:before {
           case 'year-desc':
             filteredExplorers.sort((a, b) => b.birthYear - a.birthYear);
             break;
+          case 'distance-desc':
+            filteredExplorers.sort((a, b) => (b.distance || 0) - (a.distance || 0));
+            break;
         }
         
-        renderExplorersList(filteredExplorers);
+        // Resetear a primera página
+        currentPage = 1;
+        renderExplorersList(filteredExplorers, currentPage);
       }
 
-      // Initial render
+   
+
+      // Inicializar
       renderExplorersList(explorersData);
       initStatistics();
+      initTimeline();
       
-      // About link
-      document.getElementById('about-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        alert('Atlas Interactivo del Mundo\nVersión 1.0\n© 2023 Todos los derechos reservados');
-      });
+      // Aplicar filtros cuando cambian los selectores
+      document.getElementById('country-filter').addEventListener('change', applyFilters);
+      document.getElementById('century-filter').addEventListener('change', applyFilters);
+      document.getElementById('sort-explorers').addEventListener('change', applyFilters);
     });
+
+    // Sample data - in a real app, this would come from your API
+const explorersData = [
+  {
+    id: 1,
+    name: "Cristóbal Colón",
+    country: "España",
+    country_code: "es",
+    birth_year: 1451,
+    death_year: 1506,
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Christopher_Columbus.PNG/220px-Christopher_Columbus.PNG",
+    achievements: "Descubrió América en 1492 mientras buscaba una ruta occidental a las Indias.",
+    biography: "Navegante genovés al servicio de la Corona de Castilla, famoso por haber realizado el descubrimiento de América en 1492. Realizó cuatro viajes a través del Océano Atlántico que llevaron al conocimiento europeo del continente americano.",
+    expeditions: [
+      { year: 1492, route: "España → Bahamas → Cuba → La Española" },
+      { year: 1493, route: "España → Antillas Menores → Puerto Rico → Jamaica" },
+      { year: 1498, route: "España → Trinidad → Venezuela" },
+      { year: 1502, route: "España → América Central" }
+    ],
+    routes: [
+      { latlngs: [[37.38, -6.00], [28.21, -16.60], [25.06, -77.34]], color: "#3498db" },
+      { latlngs: [[37.38, -6.00], [17.07, -61.80], [18.42, -77.10]], color: "#e74c3c" }
+    ]
+  },
+  // Add more explorers following the same structure
+  {
+    id: 2,
+    name: "Fernando de Magallanes",
+    country: "Portugal",
+    country_code: "pt",
+    birth_year: 1480,
+    death_year: 1521,
+    image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ferdinand_Magellan.jpg/220px-Ferdinand_Magellan.jpg",
+    achievements: "Organizó la primera circunnavegación de la Tierra, aunque murió durante el viaje.",
+    biography: "Explorador portugués que organizó la expedición española que resultó en la primera circunnavegación de la Tierra. Murió en las Filipinas durante la expedición, que fue completada por Juan Sebastián Elcano.",
+    expeditions: [
+      { year: 1519, route: "España → Sudamérica → Estrecho de Magallanes → Filipinas" }
+    ],
+    routes: [
+      { latlngs: [[37.38, -6.00], [-34.61, -58.37], [-52.40, -70.91], [10.72, 122.56]], color: "#2ecc71" }
+    ]
+  }
+];
+
+document.addEventListener('DOMContentLoaded', async function() {
+  try {
+    // In a real app, you would fetch this from your API:
+    // const response = await fetch('/api/explorers');
+    // const explorers = await response.json();
+    
+    // For this example, we'll use the sample data:
+    const explorers = explorersData;
+    
+    // Initialize the page
+    renderExplorers(explorers);
+    setupCountryFilter(explorers);
+    initExplorersMap(explorers);
+    initTimeline(explorers);
+    
+    // Setup event listeners
+    setupEventListeners(explorers);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    showError('Error al cargar los datos de exploradores');
+  }
+});
+
+function renderExplorersList(explorers, page = 1) {
+  const container = document.getElementById('explorers-list');
+  container.innerHTML = '';
+  
+  // ... your existing code ...
+
+  paginatedExplorers.forEach(explorer => {
+    const card = document.createElement('div');
+    card.className = 'explorer-card';
+    card.innerHTML = `
+      <!-- Your card HTML -->
+      <button class="btn-more-info" data-id="${explorer.id}">
+        <i class="fas fa-info-circle"></i> Más información
+      </button>
+    `;
+    container.appendChild(card);
+    
+    // Add click handler to the button
+    card.querySelector('.btn-more-info').addEventListener('click', (e) => {
+      e.preventDefault();
+      showExplorerModal(explorer);
+    });
+  });
+    
+    // Ensure the button click works
+    const moreInfoBtn = card.querySelector('.btn-more-info');
+    if (moreInfoBtn) {
+      moreInfoBtn.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent card click from also triggering
+        showExplorerModal(explorer);
+      });
+    }
+};
+  
+  updatePaginationControls(explorers.length);
+
+
+function initExplorersMap(explorers) {
+  const map = L.map('explorers-map').setView([20, 0], 2);
+  
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+  
+  // Add routes for each explorer
+  explorers.forEach(explorer => {
+    explorer.routes?.forEach(route => {
+      L.polyline(route.latlngs, {color: route.color}).addTo(map)
+        .bindPopup(`<b>${explorer.name}</b><br>${explorer.country}`);
+    });
+  });
+}
+
+function initTimeline(explorers) {
+  // Prepare timeline data
+  const timelineData = explorers.map(explorer => ({
+    x: explorer.name,
+    y: [
+      new Date(explorer.birth_year, 0).getTime(),
+      new Date(explorer.death_year || explorer.birth_year + 70, 0).getTime()
+    ],
+    fillColor: getRandomColor()
+  }));
+  
+  const options = {
+    series: [{
+      data: timelineData
+    }],
+    chart: {
+      type: 'rangeBar',
+      height: 350,
+      toolbar: { show: false }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        distributed: true
+      }
+    },
+    xaxis: {
+      type: 'datetime',
+      labels: {
+        formatter: function(val) {
+          return new Date(val).getFullYear();
+        }
+      }
+    },
+    tooltip: {
+      custom: function({ seriesIndex, dataPointIndex, w }) {
+        const explorer = explorers[dataPointIndex];
+        return `
+          <div class="timeline-tooltip">
+            <strong>${explorer.name}</strong><br>
+            <span>${explorer.birth_year} - ${explorer.death_year || '?'}</span><br>
+            <small>${explorer.country}</small>
+          </div>
+        `;
+      }
+    }
+  };
+  
+  const chart = new ApexCharts(document.querySelector("#exploration-timeline"), options);
+  chart.render();
+}
+
+function setupEventListeners(explorers) {
+  // Search and filter
+  document.getElementById('explorer-search').addEventListener('input', (e) => {
+    filterExplorers(explorers);
+  });
+  
+  document.getElementById('country-filter').addEventListener('change', () => {
+    filterExplorers(explorers);
+  });
+  
+  document.getElementById('century-filter').addEventListener('change', () => {
+    filterExplorers(explorers);
+  });
+  
+  document.getElementById('sort-explorers').addEventListener('change', () => {
+    filterExplorers(explorers);
+  });
+  
+  // Close modal
+  document.querySelector('.close-modal').addEventListener('click', () => {
+    document.getElementById('explorer-modal').style.display = 'none';
+  });
+  
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    if (e.target === document.getElementById('explorer-modal')) {
+      document.getElementById('explorer-modal').style.display = 'none';
+    }
+  });
+}
+
+function showExplorerModal(explorer) {
+  const modal = document.getElementById('explorer-modal');
+  const modalContent = document.getElementById('modal-content');
+  
+  if (!modal || !modalContent) {
+    console.error('Modal elements not found!');
+    return;
+  }
+
+  // Generate the modal content
+  modalContent.innerHTML = `
+    <div class="modal-grid">
+      <div class="modal-image">
+        <img src="${explorer.image}" alt="${explorer.name}">
+        <div class="modal-meta">
+          <div class="meta-box">
+            <i class="fas fa-calendar"></i>
+            <span>${explorer.birthYear} - ${explorer.deathYear}</span>
+          </div>
+          <div class="meta-box">
+            <i class="fas fa-flag"></i>
+            <span>${explorer.country}</span>
+          </div>
+          <div class="meta-box">
+            <i class="fas fa-clock"></i>
+            <span>Siglo ${explorer.century}</span>
+          </div>
+          <div class="meta-box">
+            <i class="fas fa-road"></i>
+            <span>${explorer.distance.toLocaleString()} km</span>
+          </div>
+        </div>
+        
+        ${explorer.gallery ? `
+        <div class="modal-section">
+          <h3><i class="fas fa-images"></i> Galería</h3>
+          <div class="image-gallery">
+            ${explorer.gallery.map(img => `
+              <div class="gallery-image">
+                <img src="${img}" alt="${explorer.name}">
+              </div>
+            `).join('')}
+          </div>
+        </div>
+        ` : ''}
+      </div>
+      
+      <div class="modal-details">
+        <div class="modal-header">
+          <h2>${explorer.name}</h2>
+        </div>
+        
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-tab="bio">Biografía</button>
+          <button class="modal-tab" data-tab="routes">Rutas</button>
+          <button class="modal-tab" data-tab="achievements">Logros</button>
+        </div>
+        
+        <div class="modal-tab-content active" id="bio">
+          <div class="modal-section">
+            <p>${explorer.description}</p>
+          </div>
+        </div>
+        
+        <div class="modal-tab-content" id="routes">
+          <div class="modal-section">
+            <h3><i class="fas fa-route"></i> Ruta de Exploración</h3>
+            <ul class="route-list">
+              ${explorer.routes.map((route, index) => `
+                <li class="route-item">
+                  <div class="route-icon">
+                    ${index === 0 ? '<i class="fas fa-ship"></i>' : 
+                      index === explorer.routes.length - 1 ? '<i class="fas fa-flag-checkered"></i>' : 
+                      '<i class="fas fa-map-marker-alt"></i>'}
+                  </div>
+                  <div class="route-details">
+                    <div class="route-name">${route.name}</div>
+                    <div class="route-coords">${route.lat.toFixed(2)}°N, ${route.lng.toFixed(2)}°E</div>
+                    <div class="route-year">${route.year || 'N/A'}</div>
+                    ${route.description ? `<p class="route-description">${route.description}</p>` : ''}
+                  </div>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+        
+        <div class="modal-tab-content" id="achievements">
+          <div class="modal-section">
+            <h3><i class="fas fa-trophy"></i> Logros Principales</h3>
+            <ul>
+              ${explorer.achievements.map(achievement => `
+                <li>${achievement}</li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Show the modal
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+
+  // Setup modal tabs
+  setupModalTabs();
+  
+  // Setup gallery images
+  setupImageGallery();
+
+  // Close modal when clicking the X button
+  const closeBtn = modal.querySelector('.close-modal');
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    };
+  }
+
+  // Close modal when clicking outside
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+  };
+}
+
+function setupModalTabs() {
+  const tabs = document.querySelectorAll('.modal-tab');
+  const tabContents = document.querySelectorAll('.modal-tab-content');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      const tabId = this.getAttribute('data-tab');
+      
+      // Update active tab
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      
+      // Update active content
+      tabContents.forEach(content => content.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    });
+  });
+}
+
+function setupImageGallery() {
+  const galleryImages = document.querySelectorAll('.gallery-image');
+  galleryImages.forEach(image => {
+    image.addEventListener('click', function() {
+      const imgSrc = this.querySelector('img').src;
+      window.open(imgSrc, '_blank');
+    });
+  });
+}
+function getRandomColor() {
+  const colors = ['#3498db', '#2ecc71', '#e74c3c', '#f39c12', '#9b59b6', '#1abc9c'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
   </script>
-</body>
+</head>
 </html>

@@ -10,17 +10,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-globe-americas"></i> Atlas Interactivo del Mundo</h1>
-    <nav>
-      <ul>
-        <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Inicio</a></li>
-        <li><a href="{{ url_for('atlas') }}"><i class="fas fa-map-marked-alt"></i> Atlas</a></li>
-        <li><a href="{{ url_for('wonders') }}"><i class="fas fa-monument"></i> Maravillas</a></li>
-        <li><a href="{{ url_for('explorers') }}"><i class="fas fa-hiking"></i> Exploradores</a></li>
-      </ul>
-    </nav>
-  </header>
+    {% include 'navbar.html' %}
+
+ 
   
   <main>
     <section class="hero">
@@ -683,6 +675,10 @@
   </section>
 
 
+  {% include 'footer.html' %}
+
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
   <script>
   // Animación al hacer scroll
   document.addEventListener('DOMContentLoaded', function() {
@@ -783,11 +779,7 @@
       });
     });
   });
-</script>
-        
-  
 
-  <script>
     // Animación al hacer scroll
     document.addEventListener('DOMContentLoaded', function() {
       const timelineItems = document.querySelectorAll('.timeline-item');
@@ -816,11 +808,6 @@
     });
   </script>
   
-  <footer>
-    <p>&copy; 2025 Atlas Interactivo del Mundo | Todos los derechos reservados</p>
-  </footer>
-  
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Inicializar el mapa circular en la página de inicio
@@ -918,12 +905,6 @@
         document.head.appendChild(style);
       }
     });
-  </script>
-  <button id="show-all-countries" class="btn btn-primary mb-3">
-    <i class="fas fa-globe"></i> Mostrar todos los países
-  </button>
-
-  <script>
     document.getElementById('show-all-countries').addEventListener('click', function() {
       // Limpiar marcador actual
       if (currentMarker) {
@@ -947,6 +928,7 @@
       // Ajustar la vista para mostrar todos los marcadores
       map.fitBounds(markers.getBounds(), { padding: [50, 50] });
     });
+    
   </script>
 </body>
 </html>

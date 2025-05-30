@@ -42,12 +42,6 @@ python3 app.py
 /data          - Archivos JSON con información histórica  
 app.py         - Archivo principal de Flask  
 
-## 📸 Capturas del Proyecto
-Página de Inicio	
-	![Iniciopage ](img/index.png)
-
-	
-
 ## ⚙️ Funcionalidades Clave
 ### 🧭 Mapa Interactivo
 

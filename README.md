@@ -1,65 +1,85 @@
-# Proyecto Personal 2025 - Atlas Interactivo
+# 🌍 Proyecto Personal 2025 - Atlas Interactivo
+## 📖 Descripción
 
-## Descripción
-Este proyecto es una aplicación interactiva educativa que permite explorar información geográfica, histórica y cultural a través de mapas, quizzes y perfiles de civilizaciones y países.
+Aplicación interactiva educativa para explorar información geográfica, histórica y cultural mediante mapas, quizzes y perfiles de civilizaciones y países.
 
-## Funcionalidades
-- Mapa interactivo.
-- Secciones dedicadas a home, maravillas,  atlas, y explorores del mundo.
-- Diseño responsivo para dispositivos móviles y escritorio.
+## ✨ Funcionalidades
 
-## Ámbito de la aplicación
-- **Front-end:** HTML, CSS, JavaScript
-- **Back-end:** Python con Flask
-- **Base de datos:** SQLite
+    🌐 Mapa interactivo y dinámico.
 
-## Stack utilizado
-- Python 3
-- Flask
-- SQLite
-- HTML5, CSS3, JavaScript
+    🏛️ Secciones: Inicio, Maravillas del Mundo, Atlas, primera-guerra segunda-guerra.
 
-## Cómo ejecutar el proyecto
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/Aleeza951/Aleeza-proyecto-personal-2025.git
+    📱 Diseño responsivo para móviles y escritorio.
 
-2. Entrar en el directorio del proyecto:
+## 🔧 Stack utilizado
+
+    Front-end: HTML5, CSS3, JavaScript
+
+    Back-end: Python 3 con Flask
+
+    Base de datos: SQLite
+
+## 🧪 Cómo ejecutar el proyecto
+
+# 1. Clonar el repositorio
+git clone https://github.com/Aleeza951/Aleeza-proyecto-personal-2025.git
+
+# 2. Entrar en el directorio
 cd Aleeza-proyecto-personal-2025
 
-3. Crear y activar el entorno virtual:
+# 3. Crear y activar entorno virtual
 python3 -m venv venv
 source venv/bin/activate
 
-4. Ejecutar la aplicación:
+# 4. Ejecutar la app
 python3 app.py
 
-5. Abrir en el navegador:
- http://127.0.0.1:5000
+👉 Luego abre en el navegador: http://127.0.0.1:5000
+🗂️ Estructura del proyecto
 
- Estructura del proyecto
+/static        - CSS y JavaScript  
+/templates     - HTML de las vistas  
+/data          - Archivos JSON con información histórica  
+app.py         - Archivo principal de Flask  
 
-    /static - Archivos CSS y JavaScript
+## 📸 Capturas del Proyecto
+Página de Inicio	
+	![Iniciopage ](img/index.png)
 
-    /templates - Archivos HTML para vistas
+	
 
-    app.py - Código principal Flask
+## ⚙️ Funcionalidades Clave
+### 🧭 Mapa Interactivo
 
-    data - Archivos JSON con datos de países y civilizaciones
+	![Homepage ](img/home-map.png)
 
-    requirements.txt - Dependencias del proyecto
 
-## Notas
 
-    El proyecto está diseñado para ser una herramienta educativa.
+    El usuario puede hacer clic en continentes o países para ver información histórica.
 
-    Los quizzes ayudan a reforzar el aprendizaje sobre la geografía y cultura mundial.
+    Datos cargados dinámicamente desde JSON.
 
-    El código es fácilmente ampliable para agregar más países o funcionalidades.
+🧙‍♂️ primera guerra segunda guerra
+    Cada civilización tiene un perfil con historia, cultura y ubicación.
 
-## Contacto
+    Puedes agregar fácilmente más civilizaciones editando data/civilizaciones.json.
+
+📚 Quizzes
+
+    Preguntas interactivas con puntaje y respuestas inmediatas.
+
+    Las preguntas se extraen de un archivo JSON y se cargan al azar.
+
+📝 Notas
+
+    Ideal para clases de historia y geografía.
+
+    Fácil de ampliar con más contenido.
+
+    Se pueden añadir funciones como audio, animaciones o búsqueda por países.
+
+📬 Contacto
 
 Aleeza Sajid
-GitHub: https://github.com/Aleeza951
-Email: aleezas947@gmail.com 
-
+GitHub: @Aleeza951
+Email: aleezas947@gmail.com
